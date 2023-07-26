@@ -1,0 +1,25 @@
+/*
+ * lineFollower_cfg.h
+ *
+ * Created: 19/07/2023 22:04:06
+ *  Author: 20101
+ */ 
+
+
+#ifndef LINEFOLLOWER_CFG_H_
+#define LINEFOLLOWER_CFG_H_
+
+
+typedef enum
+{
+	LINE_FOLLOWER_IR_SCANNING = 0,
+	LINE_FOLLOWER_TAKE_DECISION,
+	LINE_FOLLOWER_MOVE,
+	LINE_FOLLOWER_STOP,
+	LINE_FOLLOWER_RIGHT,
+	LINE_FOLLOWER_LEFT,
+	LINE_FOLLOWER_EXIT	
+}ENU_lineFollowerState_t;
+
+
+#endif /* LINEFOLLOWER_CFG_H_ */

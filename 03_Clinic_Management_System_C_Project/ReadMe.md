@@ -2,6 +2,14 @@
 
 This is a repository for the Clinic Management System project developed as part of the ITI_ES_4M course.
 
+## Table of Contents
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
 ## Project Overview
 

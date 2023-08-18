@@ -51,7 +51,5 @@ Each data structure folder contains its own set of examples and usage instructio
 Contributions to this repository are welcome. If you find any issues, have suggestions for improvements, or would like to add new data structures or examples, please open an issue or submit a pull request. Your contributions help improve the learning experience for everyone.
 
 ## Contact
-For any inquiries or further information, please contact Sherif Khadr.
-
-
+For any inquiries or further information, please contact [Sherif Khadr](https://www.linkedin.com/in/sherifkhadr/).
 

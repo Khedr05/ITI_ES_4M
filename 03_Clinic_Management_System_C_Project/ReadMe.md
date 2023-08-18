@@ -20,11 +20,11 @@ The Clinic Management System is a C-based project designed to facilitate the man
 1. Clone the repository:
    ```bash
    git clone https://github.com/sherifkhadr/ITI_ES_4M.git
-  ``
+   ```
 2. Navigate to the project directory: 
-    ```bash 
-    cd ITI_ES_4M/03_Clinic_Management_System_C_Project
-    ```
+   ```bash 
+   cd ITI_ES_4M/03_Clinic_Management_System_C_Project
+   ```
 3. Compile the source code:
    ```bash
    gcc main.c -o clinic_management_system

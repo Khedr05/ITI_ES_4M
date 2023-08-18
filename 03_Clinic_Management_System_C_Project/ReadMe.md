@@ -30,10 +30,6 @@ The Clinic Management System is a C-based project designed to facilitate the man
 
 Contributions to the Clinic Management System project are welcome. If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Contact
 
 For any inquiries or further information, please contact [Sherif Khadr](mailto:sherifkhadr@example.com).

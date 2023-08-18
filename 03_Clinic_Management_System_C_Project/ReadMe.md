@@ -8,7 +8,6 @@ This is a repository for the Clinic Management System project developed as part 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ## Project Overview
@@ -53,4 +52,4 @@ Contributions to the Clinic Management System project are welcome. If you encoun
 
 ## Contact
 
-For any inquiries or further information, please contact [Sherif Khadr](mailto:sherifkhadr@example.com).
+For any inquiries or further information, please contact [Sherif Khadr](https://www.linkedin.com/in/sherifkhadr/).

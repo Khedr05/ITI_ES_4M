@@ -8,6 +8,7 @@ The ITI_ES_4M repository is a collection of labs, assignments, and projects that
 - [Topics Covered](#topics-covered)
 - [Usage](#usage)
 - [Contributing](#contributing)
+- [Contact](#contact)
 
 ## Contents
 
@@ -42,3 +43,6 @@ git clone https://github.com/sherifkhadr/ITI_ES_4M.git
 
 Contributions to this repository are currently not open. However, if you have any suggestions or find any issues, feel free to create an issue in the repository.
 
+## Contact
+
+For any inquiries or further information, please contact [Sherif Khadr](https://www.linkedin.com/in/sherifkhadr/).

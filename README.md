@@ -14,10 +14,10 @@ The ITI_ES_4M repository is a collection of labs, assignments, and projects that
 
 The repository contains the following folders:
 
-- `00_Welcome_Project`: [Description of the Welcome Project]
-- `01_C_Programming`: [Description of the C Programming folder]
-- `02_Data_Structures`: [Description of the Data Structures folder]
-- `03_Clinic_Management_System_C_Project`: [Description of the Clinic Management System C Project folder]
+- `00_Welcome_Project`
+- `01_C_Programming`
+- `02_Data_Structures`
+- `03_Clinic_Management_System_C_Project`
 
 ## Topics Covered
 

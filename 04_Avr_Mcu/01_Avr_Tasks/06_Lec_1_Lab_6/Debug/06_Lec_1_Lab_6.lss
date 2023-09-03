@@ -1,0 +1,1653 @@
+
+06_Lec_1_Lab_6.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000009dc  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000001e  00800060  000009dc  00000a50  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .stab         00001b48  00000000  00000000  00000a70  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  3 .stabstr      00001d5a  00000000  00000000  000025b8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	ec ed       	ldi	r30, 0xDC	; 220
+  68:	f9 e0       	ldi	r31, 0x09	; 9
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <.do_copy_data_start>
+
+0000006c <.do_copy_data_loop>:
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+
+00000070 <.do_copy_data_start>:
+  70:	ae 37       	cpi	r26, 0x7E	; 126
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <.do_copy_data_loop>
+  76:	0e 94 e3 04 	call	0x9c6	; 0x9c6 <main>
+  7a:	0c 94 ec 04 	jmp	0x9d8	; 0x9d8 <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <GPIO_initPin>:
+static volatile uint8_t *port_registers[] = {&PORTA_REG, &PORTB_REG, &PORTC_REG,
+                                             &PORTD_REG};
+static volatile uint8_t *pin_registers[] = {&PINA_REG, &PINB_REG, &PINC_REG,
+                                            &PIND_REG};
+
+EN_GPIO_systemState_t GPIO_initPin(ST_GPIO_cfg_t const *ST_ptrPinInstance) {
+  82:	df 93       	push	r29
+  84:	cf 93       	push	r28
+  86:	00 d0       	rcall	.+0      	; 0x88 <GPIO_initPin+0x6>
+  88:	0f 92       	push	r0
+  8a:	cd b7       	in	r28, 0x3d	; 61
+  8c:	de b7       	in	r29, 0x3e	; 62
+  8e:	9b 83       	std	Y+3, r25	; 0x03
+  90:	8a 83       	std	Y+2, r24	; 0x02
+  EN_GPIO_systemState_t ret = GPIO_NOK;
+  92:	81 e0       	ldi	r24, 0x01	; 1
+  94:	89 83       	std	Y+1, r24	; 0x01
+  if (PTR_NULL != ST_ptrPinInstance) {
+  96:	8a 81       	ldd	r24, Y+2	; 0x02
+  98:	9b 81       	ldd	r25, Y+3	; 0x03
+  9a:	00 97       	sbiw	r24, 0x00	; 0
+  9c:	b1 f0       	breq	.+44     	; 0xca <GPIO_initPin+0x48>
+    ret = GPIO_changePinDir(ST_ptrPinInstance, ST_ptrPinInstance->pinDirection);
+  9e:	ea 81       	ldd	r30, Y+2	; 0x02
+  a0:	fb 81       	ldd	r31, Y+3	; 0x03
+  a2:	22 81       	ldd	r18, Z+2	; 0x02
+  a4:	8a 81       	ldd	r24, Y+2	; 0x02
+  a6:	9b 81       	ldd	r25, Y+3	; 0x03
+  a8:	62 2f       	mov	r22, r18
+  aa:	0e 94 6e 00 	call	0xdc	; 0xdc <GPIO_changePinDir>
+  ae:	89 83       	std	Y+1, r24	; 0x01
+    if (GPIO_OK == ret) {
+  b0:	89 81       	ldd	r24, Y+1	; 0x01
+  b2:	88 23       	and	r24, r24
+  b4:	61 f4       	brne	.+24     	; 0xce <GPIO_initPin+0x4c>
+      ret =
+  b6:	ea 81       	ldd	r30, Y+2	; 0x02
+  b8:	fb 81       	ldd	r31, Y+3	; 0x03
+  ba:	23 81       	ldd	r18, Z+3	; 0x03
+  bc:	8a 81       	ldd	r24, Y+2	; 0x02
+  be:	9b 81       	ldd	r25, Y+3	; 0x03
+  c0:	62 2f       	mov	r22, r18
+  c2:	0e 94 f3 00 	call	0x1e6	; 0x1e6 <GPIO_writePinLogic>
+  c6:	89 83       	std	Y+1, r24	; 0x01
+  c8:	02 c0       	rjmp	.+4      	; 0xce <GPIO_initPin+0x4c>
+          GPIO_writePinLogic(ST_ptrPinInstance, ST_ptrPinInstance->logicOnPin);
+    } else {
+      /*Do Nothin*/
+    }
+  } else {
+    ret = GPIO_NULL_PTR;
+  ca:	82 e0       	ldi	r24, 0x02	; 2
+  cc:	89 83       	std	Y+1, r24	; 0x01
+  }
+  return ret;
+  ce:	89 81       	ldd	r24, Y+1	; 0x01
+}
+  d0:	0f 90       	pop	r0
+  d2:	0f 90       	pop	r0
+  d4:	0f 90       	pop	r0
+  d6:	cf 91       	pop	r28
+  d8:	df 91       	pop	r29
+  da:	08 95       	ret
+
+000000dc <GPIO_changePinDir>:
+
+EN_GPIO_systemState_t GPIO_changePinDir(ST_GPIO_cfg_t const *ST_ptrPinInstance,
+                                        EN_GPIO_pinDir_t copyNewPinDir) {
+  dc:	df 93       	push	r29
+  de:	cf 93       	push	r28
+  e0:	00 d0       	rcall	.+0      	; 0xe2 <GPIO_changePinDir+0x6>
+  e2:	00 d0       	rcall	.+0      	; 0xe4 <GPIO_changePinDir+0x8>
+  e4:	00 d0       	rcall	.+0      	; 0xe6 <GPIO_changePinDir+0xa>
+  e6:	cd b7       	in	r28, 0x3d	; 61
+  e8:	de b7       	in	r29, 0x3e	; 62
+  ea:	9b 83       	std	Y+3, r25	; 0x03
+  ec:	8a 83       	std	Y+2, r24	; 0x02
+  ee:	6c 83       	std	Y+4, r22	; 0x04
+  EN_GPIO_systemState_t ret = GPIO_NOK;
+  f0:	81 e0       	ldi	r24, 0x01	; 1
+  f2:	89 83       	std	Y+1, r24	; 0x01
+  if (PTR_NULL != ST_ptrPinInstance) {
+  f4:	8a 81       	ldd	r24, Y+2	; 0x02
+  f6:	9b 81       	ldd	r25, Y+3	; 0x03
+  f8:	00 97       	sbiw	r24, 0x00	; 0
+  fa:	09 f4       	brne	.+2      	; 0xfe <GPIO_changePinDir+0x22>
+  fc:	68 c0       	rjmp	.+208    	; 0x1ce <GPIO_changePinDir+0xf2>
+    switch (copyNewPinDir) {
+  fe:	8c 81       	ldd	r24, Y+4	; 0x04
+ 100:	28 2f       	mov	r18, r24
+ 102:	30 e0       	ldi	r19, 0x00	; 0
+ 104:	3e 83       	std	Y+6, r19	; 0x06
+ 106:	2d 83       	std	Y+5, r18	; 0x05
+ 108:	8d 81       	ldd	r24, Y+5	; 0x05
+ 10a:	9e 81       	ldd	r25, Y+6	; 0x06
+ 10c:	00 97       	sbiw	r24, 0x00	; 0
+ 10e:	31 f0       	breq	.+12     	; 0x11c <GPIO_changePinDir+0x40>
+ 110:	2d 81       	ldd	r18, Y+5	; 0x05
+ 112:	3e 81       	ldd	r19, Y+6	; 0x06
+ 114:	21 30       	cpi	r18, 0x01	; 1
+ 116:	31 05       	cpc	r19, r1
+ 118:	71 f1       	breq	.+92     	; 0x176 <GPIO_changePinDir+0x9a>
+ 11a:	5b c0       	rjmp	.+182    	; 0x1d2 <GPIO_changePinDir+0xf6>
+    case GPIO_INPUT: {
+      CLR_BIT(*ddr_registers[ST_ptrPinInstance->portName],
+ 11c:	ea 81       	ldd	r30, Y+2	; 0x02
+ 11e:	fb 81       	ldd	r31, Y+3	; 0x03
+ 120:	80 81       	ld	r24, Z
+ 122:	88 2f       	mov	r24, r24
+ 124:	90 e0       	ldi	r25, 0x00	; 0
+ 126:	88 0f       	add	r24, r24
+ 128:	99 1f       	adc	r25, r25
+ 12a:	fc 01       	movw	r30, r24
+ 12c:	e0 5a       	subi	r30, 0xA0	; 160
+ 12e:	ff 4f       	sbci	r31, 0xFF	; 255
+ 130:	a0 81       	ld	r26, Z
+ 132:	b1 81       	ldd	r27, Z+1	; 0x01
+ 134:	ea 81       	ldd	r30, Y+2	; 0x02
+ 136:	fb 81       	ldd	r31, Y+3	; 0x03
+ 138:	80 81       	ld	r24, Z
+ 13a:	88 2f       	mov	r24, r24
+ 13c:	90 e0       	ldi	r25, 0x00	; 0
+ 13e:	88 0f       	add	r24, r24
+ 140:	99 1f       	adc	r25, r25
+ 142:	fc 01       	movw	r30, r24
+ 144:	e0 5a       	subi	r30, 0xA0	; 160
+ 146:	ff 4f       	sbci	r31, 0xFF	; 255
+ 148:	01 90       	ld	r0, Z+
+ 14a:	f0 81       	ld	r31, Z
+ 14c:	e0 2d       	mov	r30, r0
+ 14e:	80 81       	ld	r24, Z
+ 150:	48 2f       	mov	r20, r24
+ 152:	ea 81       	ldd	r30, Y+2	; 0x02
+ 154:	fb 81       	ldd	r31, Y+3	; 0x03
+ 156:	81 81       	ldd	r24, Z+1	; 0x01
+ 158:	28 2f       	mov	r18, r24
+ 15a:	30 e0       	ldi	r19, 0x00	; 0
+ 15c:	81 e0       	ldi	r24, 0x01	; 1
+ 15e:	90 e0       	ldi	r25, 0x00	; 0
+ 160:	02 2e       	mov	r0, r18
+ 162:	02 c0       	rjmp	.+4      	; 0x168 <GPIO_changePinDir+0x8c>
+ 164:	88 0f       	add	r24, r24
+ 166:	99 1f       	adc	r25, r25
+ 168:	0a 94       	dec	r0
+ 16a:	e2 f7       	brpl	.-8      	; 0x164 <GPIO_changePinDir+0x88>
+ 16c:	80 95       	com	r24
+ 16e:	84 23       	and	r24, r20
+ 170:	8c 93       	st	X, r24
+              ST_ptrPinInstance->pinNumber);
+      ret = GPIO_OK;
+ 172:	19 82       	std	Y+1, r1	; 0x01
+ 174:	2e c0       	rjmp	.+92     	; 0x1d2 <GPIO_changePinDir+0xf6>
+      break;
+    }
+    case GPIO_OUTPUT: {
+      SET_BIT(*ddr_registers[ST_ptrPinInstance->portName],
+ 176:	ea 81       	ldd	r30, Y+2	; 0x02
+ 178:	fb 81       	ldd	r31, Y+3	; 0x03
+ 17a:	80 81       	ld	r24, Z
+ 17c:	88 2f       	mov	r24, r24
+ 17e:	90 e0       	ldi	r25, 0x00	; 0
+ 180:	88 0f       	add	r24, r24
+ 182:	99 1f       	adc	r25, r25
+ 184:	fc 01       	movw	r30, r24
+ 186:	e0 5a       	subi	r30, 0xA0	; 160
+ 188:	ff 4f       	sbci	r31, 0xFF	; 255
+ 18a:	a0 81       	ld	r26, Z
+ 18c:	b1 81       	ldd	r27, Z+1	; 0x01
+ 18e:	ea 81       	ldd	r30, Y+2	; 0x02
+ 190:	fb 81       	ldd	r31, Y+3	; 0x03
+ 192:	80 81       	ld	r24, Z
+ 194:	88 2f       	mov	r24, r24
+ 196:	90 e0       	ldi	r25, 0x00	; 0
+ 198:	88 0f       	add	r24, r24
+ 19a:	99 1f       	adc	r25, r25
+ 19c:	fc 01       	movw	r30, r24
+ 19e:	e0 5a       	subi	r30, 0xA0	; 160
+ 1a0:	ff 4f       	sbci	r31, 0xFF	; 255
+ 1a2:	01 90       	ld	r0, Z+
+ 1a4:	f0 81       	ld	r31, Z
+ 1a6:	e0 2d       	mov	r30, r0
+ 1a8:	80 81       	ld	r24, Z
+ 1aa:	48 2f       	mov	r20, r24
+ 1ac:	ea 81       	ldd	r30, Y+2	; 0x02
+ 1ae:	fb 81       	ldd	r31, Y+3	; 0x03
+ 1b0:	81 81       	ldd	r24, Z+1	; 0x01
+ 1b2:	28 2f       	mov	r18, r24
+ 1b4:	30 e0       	ldi	r19, 0x00	; 0
+ 1b6:	81 e0       	ldi	r24, 0x01	; 1
+ 1b8:	90 e0       	ldi	r25, 0x00	; 0
+ 1ba:	02 2e       	mov	r0, r18
+ 1bc:	02 c0       	rjmp	.+4      	; 0x1c2 <GPIO_changePinDir+0xe6>
+ 1be:	88 0f       	add	r24, r24
+ 1c0:	99 1f       	adc	r25, r25
+ 1c2:	0a 94       	dec	r0
+ 1c4:	e2 f7       	brpl	.-8      	; 0x1be <GPIO_changePinDir+0xe2>
+ 1c6:	84 2b       	or	r24, r20
+ 1c8:	8c 93       	st	X, r24
+              ST_ptrPinInstance->pinNumber);
+      ret = GPIO_OK;
+ 1ca:	19 82       	std	Y+1, r1	; 0x01
+ 1cc:	02 c0       	rjmp	.+4      	; 0x1d2 <GPIO_changePinDir+0xf6>
+      break;
+    }
+    }
+  } else {
+    ret = GPIO_NULL_PTR;
+ 1ce:	82 e0       	ldi	r24, 0x02	; 2
+ 1d0:	89 83       	std	Y+1, r24	; 0x01
+  }
+  return ret;
+ 1d2:	89 81       	ldd	r24, Y+1	; 0x01
+}
+ 1d4:	26 96       	adiw	r28, 0x06	; 6
+ 1d6:	0f b6       	in	r0, 0x3f	; 63
+ 1d8:	f8 94       	cli
+ 1da:	de bf       	out	0x3e, r29	; 62
+ 1dc:	0f be       	out	0x3f, r0	; 63
+ 1de:	cd bf       	out	0x3d, r28	; 61
+ 1e0:	cf 91       	pop	r28
+ 1e2:	df 91       	pop	r29
+ 1e4:	08 95       	ret
+
+000001e6 <GPIO_writePinLogic>:
+
+EN_GPIO_systemState_t GPIO_writePinLogic(ST_GPIO_cfg_t const *ST_ptrPinInstance,
+                                         EN_GPIO_pinLogic_t copyNewPinLogic) {
+ 1e6:	df 93       	push	r29
+ 1e8:	cf 93       	push	r28
+ 1ea:	00 d0       	rcall	.+0      	; 0x1ec <GPIO_writePinLogic+0x6>
+ 1ec:	00 d0       	rcall	.+0      	; 0x1ee <GPIO_writePinLogic+0x8>
+ 1ee:	00 d0       	rcall	.+0      	; 0x1f0 <GPIO_writePinLogic+0xa>
+ 1f0:	cd b7       	in	r28, 0x3d	; 61
+ 1f2:	de b7       	in	r29, 0x3e	; 62
+ 1f4:	9b 83       	std	Y+3, r25	; 0x03
+ 1f6:	8a 83       	std	Y+2, r24	; 0x02
+ 1f8:	6c 83       	std	Y+4, r22	; 0x04
+  EN_GPIO_systemState_t ret = GPIO_NOK;
+ 1fa:	81 e0       	ldi	r24, 0x01	; 1
+ 1fc:	89 83       	std	Y+1, r24	; 0x01
+  if (PTR_NULL != ST_ptrPinInstance) {
+ 1fe:	8a 81       	ldd	r24, Y+2	; 0x02
+ 200:	9b 81       	ldd	r25, Y+3	; 0x03
+ 202:	00 97       	sbiw	r24, 0x00	; 0
+ 204:	09 f4       	brne	.+2      	; 0x208 <GPIO_writePinLogic+0x22>
+ 206:	68 c0       	rjmp	.+208    	; 0x2d8 <GPIO_writePinLogic+0xf2>
+    switch (copyNewPinLogic) {
+ 208:	8c 81       	ldd	r24, Y+4	; 0x04
+ 20a:	28 2f       	mov	r18, r24
+ 20c:	30 e0       	ldi	r19, 0x00	; 0
+ 20e:	3e 83       	std	Y+6, r19	; 0x06
+ 210:	2d 83       	std	Y+5, r18	; 0x05
+ 212:	8d 81       	ldd	r24, Y+5	; 0x05
+ 214:	9e 81       	ldd	r25, Y+6	; 0x06
+ 216:	00 97       	sbiw	r24, 0x00	; 0
+ 218:	31 f0       	breq	.+12     	; 0x226 <GPIO_writePinLogic+0x40>
+ 21a:	2d 81       	ldd	r18, Y+5	; 0x05
+ 21c:	3e 81       	ldd	r19, Y+6	; 0x06
+ 21e:	21 30       	cpi	r18, 0x01	; 1
+ 220:	31 05       	cpc	r19, r1
+ 222:	71 f1       	breq	.+92     	; 0x280 <GPIO_writePinLogic+0x9a>
+ 224:	5b c0       	rjmp	.+182    	; 0x2dc <GPIO_writePinLogic+0xf6>
+    case GPIO_LOW: {
+      CLR_BIT(*port_registers[ST_ptrPinInstance->portName],
+ 226:	ea 81       	ldd	r30, Y+2	; 0x02
+ 228:	fb 81       	ldd	r31, Y+3	; 0x03
+ 22a:	80 81       	ld	r24, Z
+ 22c:	88 2f       	mov	r24, r24
+ 22e:	90 e0       	ldi	r25, 0x00	; 0
+ 230:	88 0f       	add	r24, r24
+ 232:	99 1f       	adc	r25, r25
+ 234:	fc 01       	movw	r30, r24
+ 236:	e8 59       	subi	r30, 0x98	; 152
+ 238:	ff 4f       	sbci	r31, 0xFF	; 255
+ 23a:	a0 81       	ld	r26, Z
+ 23c:	b1 81       	ldd	r27, Z+1	; 0x01
+ 23e:	ea 81       	ldd	r30, Y+2	; 0x02
+ 240:	fb 81       	ldd	r31, Y+3	; 0x03
+ 242:	80 81       	ld	r24, Z
+ 244:	88 2f       	mov	r24, r24
+ 246:	90 e0       	ldi	r25, 0x00	; 0
+ 248:	88 0f       	add	r24, r24
+ 24a:	99 1f       	adc	r25, r25
+ 24c:	fc 01       	movw	r30, r24
+ 24e:	e8 59       	subi	r30, 0x98	; 152
+ 250:	ff 4f       	sbci	r31, 0xFF	; 255
+ 252:	01 90       	ld	r0, Z+
+ 254:	f0 81       	ld	r31, Z
+ 256:	e0 2d       	mov	r30, r0
+ 258:	80 81       	ld	r24, Z
+ 25a:	48 2f       	mov	r20, r24
+ 25c:	ea 81       	ldd	r30, Y+2	; 0x02
+ 25e:	fb 81       	ldd	r31, Y+3	; 0x03
+ 260:	81 81       	ldd	r24, Z+1	; 0x01
+ 262:	28 2f       	mov	r18, r24
+ 264:	30 e0       	ldi	r19, 0x00	; 0
+ 266:	81 e0       	ldi	r24, 0x01	; 1
+ 268:	90 e0       	ldi	r25, 0x00	; 0
+ 26a:	02 2e       	mov	r0, r18
+ 26c:	02 c0       	rjmp	.+4      	; 0x272 <GPIO_writePinLogic+0x8c>
+ 26e:	88 0f       	add	r24, r24
+ 270:	99 1f       	adc	r25, r25
+ 272:	0a 94       	dec	r0
+ 274:	e2 f7       	brpl	.-8      	; 0x26e <GPIO_writePinLogic+0x88>
+ 276:	80 95       	com	r24
+ 278:	84 23       	and	r24, r20
+ 27a:	8c 93       	st	X, r24
+              ST_ptrPinInstance->pinNumber);
+      ret = GPIO_OK;
+ 27c:	19 82       	std	Y+1, r1	; 0x01
+ 27e:	2e c0       	rjmp	.+92     	; 0x2dc <GPIO_writePinLogic+0xf6>
+      break;
+    }
+    case GPIO_HIGH: {
+      SET_BIT(*port_registers[ST_ptrPinInstance->portName],
+ 280:	ea 81       	ldd	r30, Y+2	; 0x02
+ 282:	fb 81       	ldd	r31, Y+3	; 0x03
+ 284:	80 81       	ld	r24, Z
+ 286:	88 2f       	mov	r24, r24
+ 288:	90 e0       	ldi	r25, 0x00	; 0
+ 28a:	88 0f       	add	r24, r24
+ 28c:	99 1f       	adc	r25, r25
+ 28e:	fc 01       	movw	r30, r24
+ 290:	e8 59       	subi	r30, 0x98	; 152
+ 292:	ff 4f       	sbci	r31, 0xFF	; 255
+ 294:	a0 81       	ld	r26, Z
+ 296:	b1 81       	ldd	r27, Z+1	; 0x01
+ 298:	ea 81       	ldd	r30, Y+2	; 0x02
+ 29a:	fb 81       	ldd	r31, Y+3	; 0x03
+ 29c:	80 81       	ld	r24, Z
+ 29e:	88 2f       	mov	r24, r24
+ 2a0:	90 e0       	ldi	r25, 0x00	; 0
+ 2a2:	88 0f       	add	r24, r24
+ 2a4:	99 1f       	adc	r25, r25
+ 2a6:	fc 01       	movw	r30, r24
+ 2a8:	e8 59       	subi	r30, 0x98	; 152
+ 2aa:	ff 4f       	sbci	r31, 0xFF	; 255
+ 2ac:	01 90       	ld	r0, Z+
+ 2ae:	f0 81       	ld	r31, Z
+ 2b0:	e0 2d       	mov	r30, r0
+ 2b2:	80 81       	ld	r24, Z
+ 2b4:	48 2f       	mov	r20, r24
+ 2b6:	ea 81       	ldd	r30, Y+2	; 0x02
+ 2b8:	fb 81       	ldd	r31, Y+3	; 0x03
+ 2ba:	81 81       	ldd	r24, Z+1	; 0x01
+ 2bc:	28 2f       	mov	r18, r24
+ 2be:	30 e0       	ldi	r19, 0x00	; 0
+ 2c0:	81 e0       	ldi	r24, 0x01	; 1
+ 2c2:	90 e0       	ldi	r25, 0x00	; 0
+ 2c4:	02 2e       	mov	r0, r18
+ 2c6:	02 c0       	rjmp	.+4      	; 0x2cc <GPIO_writePinLogic+0xe6>
+ 2c8:	88 0f       	add	r24, r24
+ 2ca:	99 1f       	adc	r25, r25
+ 2cc:	0a 94       	dec	r0
+ 2ce:	e2 f7       	brpl	.-8      	; 0x2c8 <GPIO_writePinLogic+0xe2>
+ 2d0:	84 2b       	or	r24, r20
+ 2d2:	8c 93       	st	X, r24
+              ST_ptrPinInstance->pinNumber);
+      ret = GPIO_OK;
+ 2d4:	19 82       	std	Y+1, r1	; 0x01
+ 2d6:	02 c0       	rjmp	.+4      	; 0x2dc <GPIO_writePinLogic+0xf6>
+      break;
+    }
+    }
+  } else {
+    ret = GPIO_NULL_PTR;
+ 2d8:	82 e0       	ldi	r24, 0x02	; 2
+ 2da:	89 83       	std	Y+1, r24	; 0x01
+  }
+  return ret;
+ 2dc:	89 81       	ldd	r24, Y+1	; 0x01
+}
+ 2de:	26 96       	adiw	r28, 0x06	; 6
+ 2e0:	0f b6       	in	r0, 0x3f	; 63
+ 2e2:	f8 94       	cli
+ 2e4:	de bf       	out	0x3e, r29	; 62
+ 2e6:	0f be       	out	0x3f, r0	; 63
+ 2e8:	cd bf       	out	0x3d, r28	; 61
+ 2ea:	cf 91       	pop	r28
+ 2ec:	df 91       	pop	r29
+ 2ee:	08 95       	ret
+
+000002f0 <GPIO_readPinLogic>:
+
+EN_GPIO_systemState_t
+GPIO_readPinLogic(ST_GPIO_cfg_t const *ST_ptrPinInstance,
+                  EN_GPIO_pinLogic_t *retCurrentPinLogic) {
+ 2f0:	df 93       	push	r29
+ 2f2:	cf 93       	push	r28
+ 2f4:	00 d0       	rcall	.+0      	; 0x2f6 <GPIO_readPinLogic+0x6>
+ 2f6:	00 d0       	rcall	.+0      	; 0x2f8 <GPIO_readPinLogic+0x8>
+ 2f8:	0f 92       	push	r0
+ 2fa:	cd b7       	in	r28, 0x3d	; 61
+ 2fc:	de b7       	in	r29, 0x3e	; 62
+ 2fe:	9b 83       	std	Y+3, r25	; 0x03
+ 300:	8a 83       	std	Y+2, r24	; 0x02
+ 302:	7d 83       	std	Y+5, r23	; 0x05
+ 304:	6c 83       	std	Y+4, r22	; 0x04
+  EN_GPIO_systemState_t ret = GPIO_NOK;
+ 306:	81 e0       	ldi	r24, 0x01	; 1
+ 308:	89 83       	std	Y+1, r24	; 0x01
+  if (PTR_NULL != ST_ptrPinInstance) {
+ 30a:	8a 81       	ldd	r24, Y+2	; 0x02
+ 30c:	9b 81       	ldd	r25, Y+3	; 0x03
+ 30e:	00 97       	sbiw	r24, 0x00	; 0
+ 310:	11 f1       	breq	.+68     	; 0x356 <GPIO_readPinLogic+0x66>
+    *retCurrentPinLogic = GET_BIT(*pin_registers[ST_ptrPinInstance->portName],
+ 312:	ea 81       	ldd	r30, Y+2	; 0x02
+ 314:	fb 81       	ldd	r31, Y+3	; 0x03
+ 316:	80 81       	ld	r24, Z
+ 318:	88 2f       	mov	r24, r24
+ 31a:	90 e0       	ldi	r25, 0x00	; 0
+ 31c:	88 0f       	add	r24, r24
+ 31e:	99 1f       	adc	r25, r25
+ 320:	fc 01       	movw	r30, r24
+ 322:	e0 59       	subi	r30, 0x90	; 144
+ 324:	ff 4f       	sbci	r31, 0xFF	; 255
+ 326:	01 90       	ld	r0, Z+
+ 328:	f0 81       	ld	r31, Z
+ 32a:	e0 2d       	mov	r30, r0
+ 32c:	80 81       	ld	r24, Z
+ 32e:	28 2f       	mov	r18, r24
+ 330:	30 e0       	ldi	r19, 0x00	; 0
+ 332:	ea 81       	ldd	r30, Y+2	; 0x02
+ 334:	fb 81       	ldd	r31, Y+3	; 0x03
+ 336:	81 81       	ldd	r24, Z+1	; 0x01
+ 338:	88 2f       	mov	r24, r24
+ 33a:	90 e0       	ldi	r25, 0x00	; 0
+ 33c:	a9 01       	movw	r20, r18
+ 33e:	02 c0       	rjmp	.+4      	; 0x344 <GPIO_readPinLogic+0x54>
+ 340:	55 95       	asr	r21
+ 342:	47 95       	ror	r20
+ 344:	8a 95       	dec	r24
+ 346:	e2 f7       	brpl	.-8      	; 0x340 <GPIO_readPinLogic+0x50>
+ 348:	ca 01       	movw	r24, r20
+ 34a:	81 70       	andi	r24, 0x01	; 1
+ 34c:	ec 81       	ldd	r30, Y+4	; 0x04
+ 34e:	fd 81       	ldd	r31, Y+5	; 0x05
+ 350:	80 83       	st	Z, r24
+                                  ST_ptrPinInstance->pinNumber);
+    ret = GPIO_OK;
+ 352:	19 82       	std	Y+1, r1	; 0x01
+ 354:	02 c0       	rjmp	.+4      	; 0x35a <GPIO_readPinLogic+0x6a>
+  } else {
+    ret = GPIO_NULL_PTR;
+ 356:	82 e0       	ldi	r24, 0x02	; 2
+ 358:	89 83       	std	Y+1, r24	; 0x01
+  }
+  return ret;
+ 35a:	89 81       	ldd	r24, Y+1	; 0x01
+}
+ 35c:	0f 90       	pop	r0
+ 35e:	0f 90       	pop	r0
+ 360:	0f 90       	pop	r0
+ 362:	0f 90       	pop	r0
+ 364:	0f 90       	pop	r0
+ 366:	cf 91       	pop	r28
+ 368:	df 91       	pop	r29
+ 36a:	08 95       	ret
+
+0000036c <GPIO_togglePinLogic>:
+
+EN_GPIO_systemState_t
+GPIO_togglePinLogic(ST_GPIO_cfg_t const *ST_ptrPinInstance) {
+ 36c:	df 93       	push	r29
+ 36e:	cf 93       	push	r28
+ 370:	00 d0       	rcall	.+0      	; 0x372 <GPIO_togglePinLogic+0x6>
+ 372:	0f 92       	push	r0
+ 374:	cd b7       	in	r28, 0x3d	; 61
+ 376:	de b7       	in	r29, 0x3e	; 62
+ 378:	9b 83       	std	Y+3, r25	; 0x03
+ 37a:	8a 83       	std	Y+2, r24	; 0x02
+  EN_GPIO_systemState_t ret = GPIO_NOK;
+ 37c:	81 e0       	ldi	r24, 0x01	; 1
+ 37e:	89 83       	std	Y+1, r24	; 0x01
+  if (PTR_NULL != ST_ptrPinInstance) {
+ 380:	8a 81       	ldd	r24, Y+2	; 0x02
+ 382:	9b 81       	ldd	r25, Y+3	; 0x03
+ 384:	00 97       	sbiw	r24, 0x00	; 0
+ 386:	61 f1       	breq	.+88     	; 0x3e0 <GPIO_togglePinLogic+0x74>
+    TOG_BIT(*port_registers[ST_ptrPinInstance->portName],
+ 388:	ea 81       	ldd	r30, Y+2	; 0x02
+ 38a:	fb 81       	ldd	r31, Y+3	; 0x03
+ 38c:	80 81       	ld	r24, Z
+ 38e:	88 2f       	mov	r24, r24
+ 390:	90 e0       	ldi	r25, 0x00	; 0
+ 392:	88 0f       	add	r24, r24
+ 394:	99 1f       	adc	r25, r25
+ 396:	fc 01       	movw	r30, r24
+ 398:	e8 59       	subi	r30, 0x98	; 152
+ 39a:	ff 4f       	sbci	r31, 0xFF	; 255
+ 39c:	a0 81       	ld	r26, Z
+ 39e:	b1 81       	ldd	r27, Z+1	; 0x01
+ 3a0:	ea 81       	ldd	r30, Y+2	; 0x02
+ 3a2:	fb 81       	ldd	r31, Y+3	; 0x03
+ 3a4:	80 81       	ld	r24, Z
+ 3a6:	88 2f       	mov	r24, r24
+ 3a8:	90 e0       	ldi	r25, 0x00	; 0
+ 3aa:	88 0f       	add	r24, r24
+ 3ac:	99 1f       	adc	r25, r25
+ 3ae:	fc 01       	movw	r30, r24
+ 3b0:	e8 59       	subi	r30, 0x98	; 152
+ 3b2:	ff 4f       	sbci	r31, 0xFF	; 255
+ 3b4:	01 90       	ld	r0, Z+
+ 3b6:	f0 81       	ld	r31, Z
+ 3b8:	e0 2d       	mov	r30, r0
+ 3ba:	80 81       	ld	r24, Z
+ 3bc:	48 2f       	mov	r20, r24
+ 3be:	ea 81       	ldd	r30, Y+2	; 0x02
+ 3c0:	fb 81       	ldd	r31, Y+3	; 0x03
+ 3c2:	81 81       	ldd	r24, Z+1	; 0x01
+ 3c4:	28 2f       	mov	r18, r24
+ 3c6:	30 e0       	ldi	r19, 0x00	; 0
+ 3c8:	81 e0       	ldi	r24, 0x01	; 1
+ 3ca:	90 e0       	ldi	r25, 0x00	; 0
+ 3cc:	02 2e       	mov	r0, r18
+ 3ce:	02 c0       	rjmp	.+4      	; 0x3d4 <GPIO_togglePinLogic+0x68>
+ 3d0:	88 0f       	add	r24, r24
+ 3d2:	99 1f       	adc	r25, r25
+ 3d4:	0a 94       	dec	r0
+ 3d6:	e2 f7       	brpl	.-8      	; 0x3d0 <GPIO_togglePinLogic+0x64>
+ 3d8:	84 27       	eor	r24, r20
+ 3da:	8c 93       	st	X, r24
+            ST_ptrPinInstance->pinNumber);
+    ret = GPIO_OK;
+ 3dc:	19 82       	std	Y+1, r1	; 0x01
+ 3de:	02 c0       	rjmp	.+4      	; 0x3e4 <GPIO_togglePinLogic+0x78>
+  } else {
+    ret = GPIO_NULL_PTR;
+ 3e0:	82 e0       	ldi	r24, 0x02	; 2
+ 3e2:	89 83       	std	Y+1, r24	; 0x01
+  }
+
+  return ret;
+ 3e4:	89 81       	ldd	r24, Y+1	; 0x01
+}
+ 3e6:	0f 90       	pop	r0
+ 3e8:	0f 90       	pop	r0
+ 3ea:	0f 90       	pop	r0
+ 3ec:	cf 91       	pop	r28
+ 3ee:	df 91       	pop	r29
+ 3f0:	08 95       	ret
+
+000003f2 <GPIO_initPort>:
+
+EN_GPIO_systemState_t GPIO_initPort(EN_GPIO_mcuPorts_t copyPortName,
+                                    EN_GPIO_pinDir_t copyPortDir,
+                                    EN_GPIO_pinLogic_t copyPortLogic) {
+ 3f2:	df 93       	push	r29
+ 3f4:	cf 93       	push	r28
+ 3f6:	cd b7       	in	r28, 0x3d	; 61
+ 3f8:	de b7       	in	r29, 0x3e	; 62
+ 3fa:	28 97       	sbiw	r28, 0x08	; 8
+ 3fc:	0f b6       	in	r0, 0x3f	; 63
+ 3fe:	f8 94       	cli
+ 400:	de bf       	out	0x3e, r29	; 62
+ 402:	0f be       	out	0x3f, r0	; 63
+ 404:	cd bf       	out	0x3d, r28	; 61
+ 406:	8a 83       	std	Y+2, r24	; 0x02
+ 408:	6b 83       	std	Y+3, r22	; 0x03
+ 40a:	4c 83       	std	Y+4, r20	; 0x04
+  EN_GPIO_systemState_t ret = GPIO_NOK;
+ 40c:	81 e0       	ldi	r24, 0x01	; 1
+ 40e:	89 83       	std	Y+1, r24	; 0x01
+
+  switch (copyPortDir) {
+ 410:	8b 81       	ldd	r24, Y+3	; 0x03
+ 412:	28 2f       	mov	r18, r24
+ 414:	30 e0       	ldi	r19, 0x00	; 0
+ 416:	38 87       	std	Y+8, r19	; 0x08
+ 418:	2f 83       	std	Y+7, r18	; 0x07
+ 41a:	8f 81       	ldd	r24, Y+7	; 0x07
+ 41c:	98 85       	ldd	r25, Y+8	; 0x08
+ 41e:	00 97       	sbiw	r24, 0x00	; 0
+ 420:	31 f0       	breq	.+12     	; 0x42e <GPIO_initPort+0x3c>
+ 422:	2f 81       	ldd	r18, Y+7	; 0x07
+ 424:	38 85       	ldd	r19, Y+8	; 0x08
+ 426:	21 30       	cpi	r18, 0x01	; 1
+ 428:	31 05       	cpc	r19, r1
+ 42a:	79 f0       	breq	.+30     	; 0x44a <GPIO_initPort+0x58>
+ 42c:	1c c0       	rjmp	.+56     	; 0x466 <GPIO_initPort+0x74>
+  case GPIO_INPUT: {
+    *ddr_registers[copyPortName] = 0x00;
+ 42e:	8a 81       	ldd	r24, Y+2	; 0x02
+ 430:	88 2f       	mov	r24, r24
+ 432:	90 e0       	ldi	r25, 0x00	; 0
+ 434:	88 0f       	add	r24, r24
+ 436:	99 1f       	adc	r25, r25
+ 438:	fc 01       	movw	r30, r24
+ 43a:	e0 5a       	subi	r30, 0xA0	; 160
+ 43c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 43e:	01 90       	ld	r0, Z+
+ 440:	f0 81       	ld	r31, Z
+ 442:	e0 2d       	mov	r30, r0
+ 444:	10 82       	st	Z, r1
+    ret = GPIO_OK;
+ 446:	19 82       	std	Y+1, r1	; 0x01
+ 448:	0e c0       	rjmp	.+28     	; 0x466 <GPIO_initPort+0x74>
+    break;
+  }
+  case GPIO_OUTPUT: {
+    *ddr_registers[copyPortName] = 0xFF;
+ 44a:	8a 81       	ldd	r24, Y+2	; 0x02
+ 44c:	88 2f       	mov	r24, r24
+ 44e:	90 e0       	ldi	r25, 0x00	; 0
+ 450:	88 0f       	add	r24, r24
+ 452:	99 1f       	adc	r25, r25
+ 454:	fc 01       	movw	r30, r24
+ 456:	e0 5a       	subi	r30, 0xA0	; 160
+ 458:	ff 4f       	sbci	r31, 0xFF	; 255
+ 45a:	01 90       	ld	r0, Z+
+ 45c:	f0 81       	ld	r31, Z
+ 45e:	e0 2d       	mov	r30, r0
+ 460:	8f ef       	ldi	r24, 0xFF	; 255
+ 462:	80 83       	st	Z, r24
+    ret = GPIO_OK;
+ 464:	19 82       	std	Y+1, r1	; 0x01
+    break;
+  }
+  }
+  switch (copyPortLogic) {
+ 466:	8c 81       	ldd	r24, Y+4	; 0x04
+ 468:	28 2f       	mov	r18, r24
+ 46a:	30 e0       	ldi	r19, 0x00	; 0
+ 46c:	3e 83       	std	Y+6, r19	; 0x06
+ 46e:	2d 83       	std	Y+5, r18	; 0x05
+ 470:	8d 81       	ldd	r24, Y+5	; 0x05
+ 472:	9e 81       	ldd	r25, Y+6	; 0x06
+ 474:	00 97       	sbiw	r24, 0x00	; 0
+ 476:	31 f0       	breq	.+12     	; 0x484 <GPIO_initPort+0x92>
+ 478:	2d 81       	ldd	r18, Y+5	; 0x05
+ 47a:	3e 81       	ldd	r19, Y+6	; 0x06
+ 47c:	21 30       	cpi	r18, 0x01	; 1
+ 47e:	31 05       	cpc	r19, r1
+ 480:	79 f0       	breq	.+30     	; 0x4a0 <GPIO_initPort+0xae>
+ 482:	1c c0       	rjmp	.+56     	; 0x4bc <GPIO_initPort+0xca>
+  case GPIO_LOW: {
+    *port_registers[copyPortName] = 0x00;
+ 484:	8a 81       	ldd	r24, Y+2	; 0x02
+ 486:	88 2f       	mov	r24, r24
+ 488:	90 e0       	ldi	r25, 0x00	; 0
+ 48a:	88 0f       	add	r24, r24
+ 48c:	99 1f       	adc	r25, r25
+ 48e:	fc 01       	movw	r30, r24
+ 490:	e8 59       	subi	r30, 0x98	; 152
+ 492:	ff 4f       	sbci	r31, 0xFF	; 255
+ 494:	01 90       	ld	r0, Z+
+ 496:	f0 81       	ld	r31, Z
+ 498:	e0 2d       	mov	r30, r0
+ 49a:	10 82       	st	Z, r1
+    ret = GPIO_OK;
+ 49c:	19 82       	std	Y+1, r1	; 0x01
+ 49e:	0e c0       	rjmp	.+28     	; 0x4bc <GPIO_initPort+0xca>
+    break;
+  }
+  case GPIO_HIGH: {
+    *port_registers[copyPortName] = 0xFF;
+ 4a0:	8a 81       	ldd	r24, Y+2	; 0x02
+ 4a2:	88 2f       	mov	r24, r24
+ 4a4:	90 e0       	ldi	r25, 0x00	; 0
+ 4a6:	88 0f       	add	r24, r24
+ 4a8:	99 1f       	adc	r25, r25
+ 4aa:	fc 01       	movw	r30, r24
+ 4ac:	e8 59       	subi	r30, 0x98	; 152
+ 4ae:	ff 4f       	sbci	r31, 0xFF	; 255
+ 4b0:	01 90       	ld	r0, Z+
+ 4b2:	f0 81       	ld	r31, Z
+ 4b4:	e0 2d       	mov	r30, r0
+ 4b6:	8f ef       	ldi	r24, 0xFF	; 255
+ 4b8:	80 83       	st	Z, r24
+    ret = GPIO_OK;
+ 4ba:	19 82       	std	Y+1, r1	; 0x01
+    break;
+  }
+  }
+  return ret;
+ 4bc:	89 81       	ldd	r24, Y+1	; 0x01
+}
+ 4be:	28 96       	adiw	r28, 0x08	; 8
+ 4c0:	0f b6       	in	r0, 0x3f	; 63
+ 4c2:	f8 94       	cli
+ 4c4:	de bf       	out	0x3e, r29	; 62
+ 4c6:	0f be       	out	0x3f, r0	; 63
+ 4c8:	cd bf       	out	0x3d, r28	; 61
+ 4ca:	cf 91       	pop	r28
+ 4cc:	df 91       	pop	r29
+ 4ce:	08 95       	ret
+
+000004d0 <GPIO_changePortDir>:
+
+EN_GPIO_systemState_t GPIO_changePortDir(EN_GPIO_mcuPorts_t copyPortName,
+                                         EN_GPIO_pinDir_t copyNewPortDir) {
+ 4d0:	df 93       	push	r29
+ 4d2:	cf 93       	push	r28
+ 4d4:	00 d0       	rcall	.+0      	; 0x4d6 <GPIO_changePortDir+0x6>
+ 4d6:	00 d0       	rcall	.+0      	; 0x4d8 <GPIO_changePortDir+0x8>
+ 4d8:	0f 92       	push	r0
+ 4da:	cd b7       	in	r28, 0x3d	; 61
+ 4dc:	de b7       	in	r29, 0x3e	; 62
+ 4de:	8a 83       	std	Y+2, r24	; 0x02
+ 4e0:	6b 83       	std	Y+3, r22	; 0x03
+  EN_GPIO_systemState_t ret = GPIO_NOK;
+ 4e2:	81 e0       	ldi	r24, 0x01	; 1
+ 4e4:	89 83       	std	Y+1, r24	; 0x01
+
+  switch (copyNewPortDir) {
+ 4e6:	8b 81       	ldd	r24, Y+3	; 0x03
+ 4e8:	28 2f       	mov	r18, r24
+ 4ea:	30 e0       	ldi	r19, 0x00	; 0
+ 4ec:	3d 83       	std	Y+5, r19	; 0x05
+ 4ee:	2c 83       	std	Y+4, r18	; 0x04
+ 4f0:	8c 81       	ldd	r24, Y+4	; 0x04
+ 4f2:	9d 81       	ldd	r25, Y+5	; 0x05
+ 4f4:	00 97       	sbiw	r24, 0x00	; 0
+ 4f6:	31 f0       	breq	.+12     	; 0x504 <GPIO_changePortDir+0x34>
+ 4f8:	2c 81       	ldd	r18, Y+4	; 0x04
+ 4fa:	3d 81       	ldd	r19, Y+5	; 0x05
+ 4fc:	21 30       	cpi	r18, 0x01	; 1
+ 4fe:	31 05       	cpc	r19, r1
+ 500:	79 f0       	breq	.+30     	; 0x520 <GPIO_changePortDir+0x50>
+ 502:	1c c0       	rjmp	.+56     	; 0x53c <GPIO_changePortDir+0x6c>
+  case GPIO_INPUT: {
+    *ddr_registers[copyPortName] = 0x00;
+ 504:	8a 81       	ldd	r24, Y+2	; 0x02
+ 506:	88 2f       	mov	r24, r24
+ 508:	90 e0       	ldi	r25, 0x00	; 0
+ 50a:	88 0f       	add	r24, r24
+ 50c:	99 1f       	adc	r25, r25
+ 50e:	fc 01       	movw	r30, r24
+ 510:	e0 5a       	subi	r30, 0xA0	; 160
+ 512:	ff 4f       	sbci	r31, 0xFF	; 255
+ 514:	01 90       	ld	r0, Z+
+ 516:	f0 81       	ld	r31, Z
+ 518:	e0 2d       	mov	r30, r0
+ 51a:	10 82       	st	Z, r1
+    ret = GPIO_OK;
+ 51c:	19 82       	std	Y+1, r1	; 0x01
+ 51e:	0e c0       	rjmp	.+28     	; 0x53c <GPIO_changePortDir+0x6c>
+    break;
+  }
+  case GPIO_OUTPUT: {
+    *ddr_registers[copyPortName] = 0xFF;
+ 520:	8a 81       	ldd	r24, Y+2	; 0x02
+ 522:	88 2f       	mov	r24, r24
+ 524:	90 e0       	ldi	r25, 0x00	; 0
+ 526:	88 0f       	add	r24, r24
+ 528:	99 1f       	adc	r25, r25
+ 52a:	fc 01       	movw	r30, r24
+ 52c:	e0 5a       	subi	r30, 0xA0	; 160
+ 52e:	ff 4f       	sbci	r31, 0xFF	; 255
+ 530:	01 90       	ld	r0, Z+
+ 532:	f0 81       	ld	r31, Z
+ 534:	e0 2d       	mov	r30, r0
+ 536:	8f ef       	ldi	r24, 0xFF	; 255
+ 538:	80 83       	st	Z, r24
+    ret = GPIO_OK;
+ 53a:	19 82       	std	Y+1, r1	; 0x01
+    break;
+  }
+  }
+  return ret;
+ 53c:	89 81       	ldd	r24, Y+1	; 0x01
+}
+ 53e:	0f 90       	pop	r0
+ 540:	0f 90       	pop	r0
+ 542:	0f 90       	pop	r0
+ 544:	0f 90       	pop	r0
+ 546:	0f 90       	pop	r0
+ 548:	cf 91       	pop	r28
+ 54a:	df 91       	pop	r29
+ 54c:	08 95       	ret
+
+0000054e <GPIO_writePortLogic>:
+
+EN_GPIO_systemState_t GPIO_writePortLogic(EN_GPIO_mcuPorts_t copyPortName,
+                                          EN_GPIO_pinLogic_t copyNewPortLogic) {
+ 54e:	df 93       	push	r29
+ 550:	cf 93       	push	r28
+ 552:	00 d0       	rcall	.+0      	; 0x554 <GPIO_writePortLogic+0x6>
+ 554:	00 d0       	rcall	.+0      	; 0x556 <GPIO_writePortLogic+0x8>
+ 556:	0f 92       	push	r0
+ 558:	cd b7       	in	r28, 0x3d	; 61
+ 55a:	de b7       	in	r29, 0x3e	; 62
+ 55c:	8a 83       	std	Y+2, r24	; 0x02
+ 55e:	6b 83       	std	Y+3, r22	; 0x03
+  EN_GPIO_systemState_t ret = GPIO_NOK;
+ 560:	81 e0       	ldi	r24, 0x01	; 1
+ 562:	89 83       	std	Y+1, r24	; 0x01
+  switch (copyNewPortLogic) {
+ 564:	8b 81       	ldd	r24, Y+3	; 0x03
+ 566:	28 2f       	mov	r18, r24
+ 568:	30 e0       	ldi	r19, 0x00	; 0
+ 56a:	3d 83       	std	Y+5, r19	; 0x05
+ 56c:	2c 83       	std	Y+4, r18	; 0x04
+ 56e:	8c 81       	ldd	r24, Y+4	; 0x04
+ 570:	9d 81       	ldd	r25, Y+5	; 0x05
+ 572:	00 97       	sbiw	r24, 0x00	; 0
+ 574:	31 f0       	breq	.+12     	; 0x582 <GPIO_writePortLogic+0x34>
+ 576:	2c 81       	ldd	r18, Y+4	; 0x04
+ 578:	3d 81       	ldd	r19, Y+5	; 0x05
+ 57a:	21 30       	cpi	r18, 0x01	; 1
+ 57c:	31 05       	cpc	r19, r1
+ 57e:	79 f0       	breq	.+30     	; 0x59e <GPIO_writePortLogic+0x50>
+ 580:	1c c0       	rjmp	.+56     	; 0x5ba <GPIO_writePortLogic+0x6c>
+  case GPIO_LOW: {
+    *port_registers[copyPortName] = 0x00;
+ 582:	8a 81       	ldd	r24, Y+2	; 0x02
+ 584:	88 2f       	mov	r24, r24
+ 586:	90 e0       	ldi	r25, 0x00	; 0
+ 588:	88 0f       	add	r24, r24
+ 58a:	99 1f       	adc	r25, r25
+ 58c:	fc 01       	movw	r30, r24
+ 58e:	e8 59       	subi	r30, 0x98	; 152
+ 590:	ff 4f       	sbci	r31, 0xFF	; 255
+ 592:	01 90       	ld	r0, Z+
+ 594:	f0 81       	ld	r31, Z
+ 596:	e0 2d       	mov	r30, r0
+ 598:	10 82       	st	Z, r1
+    ret = GPIO_OK;
+ 59a:	19 82       	std	Y+1, r1	; 0x01
+ 59c:	0e c0       	rjmp	.+28     	; 0x5ba <GPIO_writePortLogic+0x6c>
+    break;
+  }
+  case GPIO_HIGH: {
+    *port_registers[copyPortName] = 0xFF;
+ 59e:	8a 81       	ldd	r24, Y+2	; 0x02
+ 5a0:	88 2f       	mov	r24, r24
+ 5a2:	90 e0       	ldi	r25, 0x00	; 0
+ 5a4:	88 0f       	add	r24, r24
+ 5a6:	99 1f       	adc	r25, r25
+ 5a8:	fc 01       	movw	r30, r24
+ 5aa:	e8 59       	subi	r30, 0x98	; 152
+ 5ac:	ff 4f       	sbci	r31, 0xFF	; 255
+ 5ae:	01 90       	ld	r0, Z+
+ 5b0:	f0 81       	ld	r31, Z
+ 5b2:	e0 2d       	mov	r30, r0
+ 5b4:	8f ef       	ldi	r24, 0xFF	; 255
+ 5b6:	80 83       	st	Z, r24
+    ret = GPIO_OK;
+ 5b8:	19 82       	std	Y+1, r1	; 0x01
+    break;
+  }
+  }
+  return ret;
+ 5ba:	89 81       	ldd	r24, Y+1	; 0x01
+}
+ 5bc:	0f 90       	pop	r0
+ 5be:	0f 90       	pop	r0
+ 5c0:	0f 90       	pop	r0
+ 5c2:	0f 90       	pop	r0
+ 5c4:	0f 90       	pop	r0
+ 5c6:	cf 91       	pop	r28
+ 5c8:	df 91       	pop	r29
+ 5ca:	08 95       	ret
+
+000005cc <GPIO_readPortLogic>:
+
+EN_GPIO_systemState_t
+GPIO_readPortLogic(EN_GPIO_mcuPorts_t copyPortName,
+                   EN_GPIO_pinLogic_t *retCurrentPortLogic) {
+ 5cc:	df 93       	push	r29
+ 5ce:	cf 93       	push	r28
+ 5d0:	00 d0       	rcall	.+0      	; 0x5d2 <GPIO_readPortLogic+0x6>
+ 5d2:	00 d0       	rcall	.+0      	; 0x5d4 <GPIO_readPortLogic+0x8>
+ 5d4:	cd b7       	in	r28, 0x3d	; 61
+ 5d6:	de b7       	in	r29, 0x3e	; 62
+ 5d8:	8a 83       	std	Y+2, r24	; 0x02
+ 5da:	7c 83       	std	Y+4, r23	; 0x04
+ 5dc:	6b 83       	std	Y+3, r22	; 0x03
+  EN_GPIO_systemState_t ret = GPIO_NOK;
+ 5de:	81 e0       	ldi	r24, 0x01	; 1
+ 5e0:	89 83       	std	Y+1, r24	; 0x01
+
+  *retCurrentPortLogic = *pin_registers[copyPortName];
+ 5e2:	8a 81       	ldd	r24, Y+2	; 0x02
+ 5e4:	88 2f       	mov	r24, r24
+ 5e6:	90 e0       	ldi	r25, 0x00	; 0
+ 5e8:	88 0f       	add	r24, r24
+ 5ea:	99 1f       	adc	r25, r25
+ 5ec:	fc 01       	movw	r30, r24
+ 5ee:	e0 59       	subi	r30, 0x90	; 144
+ 5f0:	ff 4f       	sbci	r31, 0xFF	; 255
+ 5f2:	01 90       	ld	r0, Z+
+ 5f4:	f0 81       	ld	r31, Z
+ 5f6:	e0 2d       	mov	r30, r0
+ 5f8:	80 81       	ld	r24, Z
+ 5fa:	eb 81       	ldd	r30, Y+3	; 0x03
+ 5fc:	fc 81       	ldd	r31, Y+4	; 0x04
+ 5fe:	80 83       	st	Z, r24
+  ret = GPIO_OK;
+ 600:	19 82       	std	Y+1, r1	; 0x01
+  return ret;
+ 602:	89 81       	ldd	r24, Y+1	; 0x01
+}
+ 604:	0f 90       	pop	r0
+ 606:	0f 90       	pop	r0
+ 608:	0f 90       	pop	r0
+ 60a:	0f 90       	pop	r0
+ 60c:	cf 91       	pop	r28
+ 60e:	df 91       	pop	r29
+ 610:	08 95       	ret
+
+00000612 <GPIO_togglePortLogic>:
+
+EN_GPIO_systemState_t GPIO_togglePortLogic(EN_GPIO_mcuPorts_t copyPortName) {
+ 612:	df 93       	push	r29
+ 614:	cf 93       	push	r28
+ 616:	00 d0       	rcall	.+0      	; 0x618 <GPIO_togglePortLogic+0x6>
+ 618:	cd b7       	in	r28, 0x3d	; 61
+ 61a:	de b7       	in	r29, 0x3e	; 62
+ 61c:	8a 83       	std	Y+2, r24	; 0x02
+  EN_GPIO_systemState_t ret = GPIO_NOK;
+ 61e:	81 e0       	ldi	r24, 0x01	; 1
+ 620:	89 83       	std	Y+1, r24	; 0x01
+  *ddr_registers[copyPortName] ^= *ddr_registers[copyPortName];
+ 622:	8a 81       	ldd	r24, Y+2	; 0x02
+ 624:	88 2f       	mov	r24, r24
+ 626:	90 e0       	ldi	r25, 0x00	; 0
+ 628:	88 0f       	add	r24, r24
+ 62a:	99 1f       	adc	r25, r25
+ 62c:	fc 01       	movw	r30, r24
+ 62e:	e0 5a       	subi	r30, 0xA0	; 160
+ 630:	ff 4f       	sbci	r31, 0xFF	; 255
+ 632:	a0 81       	ld	r26, Z
+ 634:	b1 81       	ldd	r27, Z+1	; 0x01
+ 636:	8a 81       	ldd	r24, Y+2	; 0x02
+ 638:	88 2f       	mov	r24, r24
+ 63a:	90 e0       	ldi	r25, 0x00	; 0
+ 63c:	88 0f       	add	r24, r24
+ 63e:	99 1f       	adc	r25, r25
+ 640:	fc 01       	movw	r30, r24
+ 642:	e0 5a       	subi	r30, 0xA0	; 160
+ 644:	ff 4f       	sbci	r31, 0xFF	; 255
+ 646:	01 90       	ld	r0, Z+
+ 648:	f0 81       	ld	r31, Z
+ 64a:	e0 2d       	mov	r30, r0
+ 64c:	20 81       	ld	r18, Z
+ 64e:	8a 81       	ldd	r24, Y+2	; 0x02
+ 650:	88 2f       	mov	r24, r24
+ 652:	90 e0       	ldi	r25, 0x00	; 0
+ 654:	88 0f       	add	r24, r24
+ 656:	99 1f       	adc	r25, r25
+ 658:	fc 01       	movw	r30, r24
+ 65a:	e0 5a       	subi	r30, 0xA0	; 160
+ 65c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 65e:	01 90       	ld	r0, Z+
+ 660:	f0 81       	ld	r31, Z
+ 662:	e0 2d       	mov	r30, r0
+ 664:	80 81       	ld	r24, Z
+ 666:	82 27       	eor	r24, r18
+ 668:	8c 93       	st	X, r24
+  ret = GPIO_OK;
+ 66a:	19 82       	std	Y+1, r1	; 0x01
+  return ret;
+ 66c:	89 81       	ldd	r24, Y+1	; 0x01
+}
+ 66e:	0f 90       	pop	r0
+ 670:	0f 90       	pop	r0
+ 672:	cf 91       	pop	r28
+ 674:	df 91       	pop	r29
+ 676:	08 95       	ret
+
+00000678 <LED_init>:
+// Date          : 1 Aug 2023 */ GitHub        : https://github.com/sherifkhadr
+/*************************************************************************/
+
+#include "led_interface.h"
+
+EN_LED_systemStates_t LED_init(ST_LED_cfg_t const *ST_ptrLedInstance) {
+ 678:	df 93       	push	r29
+ 67a:	cf 93       	push	r28
+ 67c:	cd b7       	in	r28, 0x3d	; 61
+ 67e:	de b7       	in	r29, 0x3e	; 62
+ 680:	28 97       	sbiw	r28, 0x08	; 8
+ 682:	0f b6       	in	r0, 0x3f	; 63
+ 684:	f8 94       	cli
+ 686:	de bf       	out	0x3e, r29	; 62
+ 688:	0f be       	out	0x3f, r0	; 63
+ 68a:	cd bf       	out	0x3d, r28	; 61
+ 68c:	98 87       	std	Y+8, r25	; 0x08
+ 68e:	8f 83       	std	Y+7, r24	; 0x07
+  EN_LED_systemStates_t ledRet = LED_NOK;
+ 690:	81 e0       	ldi	r24, 0x01	; 1
+ 692:	8a 83       	std	Y+2, r24	; 0x02
+  EN_GPIO_systemState_t gpioRet = GPIO_NOK;
+ 694:	81 e0       	ldi	r24, 0x01	; 1
+ 696:	89 83       	std	Y+1, r24	; 0x01
+  if (PTR_NULL != ST_ptrLedInstance) {
+ 698:	8f 81       	ldd	r24, Y+7	; 0x07
+ 69a:	98 85       	ldd	r25, Y+8	; 0x08
+ 69c:	00 97       	sbiw	r24, 0x00	; 0
+ 69e:	d9 f0       	breq	.+54     	; 0x6d6 <LED_init+0x5e>
+
+    ST_GPIO_cfg_t copyOfLedInstance = {
+        .logicOnPin = (EN_GPIO_pinLogic_t)ST_ptrLedInstance->ledDefaultState,
+        .pinDirection = GPIO_OUTPUT,
+        .pinNumber = ST_ptrLedInstance->ledPinNumber,
+        .portName = ST_ptrLedInstance->ledPortName};
+ 6a0:	ef 81       	ldd	r30, Y+7	; 0x07
+ 6a2:	f8 85       	ldd	r31, Y+8	; 0x08
+ 6a4:	81 81       	ldd	r24, Z+1	; 0x01
+ 6a6:	ef 81       	ldd	r30, Y+7	; 0x07
+ 6a8:	f8 85       	ldd	r31, Y+8	; 0x08
+ 6aa:	92 81       	ldd	r25, Z+2	; 0x02
+ 6ac:	ef 81       	ldd	r30, Y+7	; 0x07
+ 6ae:	f8 85       	ldd	r31, Y+8	; 0x08
+ 6b0:	20 81       	ld	r18, Z
+ 6b2:	8b 83       	std	Y+3, r24	; 0x03
+ 6b4:	9c 83       	std	Y+4, r25	; 0x04
+ 6b6:	81 e0       	ldi	r24, 0x01	; 1
+ 6b8:	8d 83       	std	Y+5, r24	; 0x05
+ 6ba:	2e 83       	std	Y+6, r18	; 0x06
+    gpioRet = GPIO_initPin(&copyOfLedInstance);
+ 6bc:	ce 01       	movw	r24, r28
+ 6be:	03 96       	adiw	r24, 0x03	; 3
+ 6c0:	0e 94 41 00 	call	0x82	; 0x82 <GPIO_initPin>
+ 6c4:	89 83       	std	Y+1, r24	; 0x01
+    if (GPIO_OK == gpioRet) {
+ 6c6:	89 81       	ldd	r24, Y+1	; 0x01
+ 6c8:	88 23       	and	r24, r24
+ 6ca:	11 f4       	brne	.+4      	; 0x6d0 <LED_init+0x58>
+      ledRet = LED_OK;
+ 6cc:	1a 82       	std	Y+2, r1	; 0x02
+ 6ce:	05 c0       	rjmp	.+10     	; 0x6da <LED_init+0x62>
+    } else {
+      ledRet = LED_NOK;
+ 6d0:	81 e0       	ldi	r24, 0x01	; 1
+ 6d2:	8a 83       	std	Y+2, r24	; 0x02
+ 6d4:	02 c0       	rjmp	.+4      	; 0x6da <LED_init+0x62>
+    }
+  } else {
+    ledRet = LED_PTR_NULL;
+ 6d6:	82 e0       	ldi	r24, 0x02	; 2
+ 6d8:	8a 83       	std	Y+2, r24	; 0x02
+  }
+  return ledRet;
+ 6da:	8a 81       	ldd	r24, Y+2	; 0x02
+}
+ 6dc:	28 96       	adiw	r28, 0x08	; 8
+ 6de:	0f b6       	in	r0, 0x3f	; 63
+ 6e0:	f8 94       	cli
+ 6e2:	de bf       	out	0x3e, r29	; 62
+ 6e4:	0f be       	out	0x3f, r0	; 63
+ 6e6:	cd bf       	out	0x3d, r28	; 61
+ 6e8:	cf 91       	pop	r28
+ 6ea:	df 91       	pop	r29
+ 6ec:	08 95       	ret
+
+000006ee <LED_turnOn>:
+EN_LED_systemStates_t LED_turnOn(ST_LED_cfg_t const *ST_ptrLedInstance) {
+ 6ee:	df 93       	push	r29
+ 6f0:	cf 93       	push	r28
+ 6f2:	cd b7       	in	r28, 0x3d	; 61
+ 6f4:	de b7       	in	r29, 0x3e	; 62
+ 6f6:	28 97       	sbiw	r28, 0x08	; 8
+ 6f8:	0f b6       	in	r0, 0x3f	; 63
+ 6fa:	f8 94       	cli
+ 6fc:	de bf       	out	0x3e, r29	; 62
+ 6fe:	0f be       	out	0x3f, r0	; 63
+ 700:	cd bf       	out	0x3d, r28	; 61
+ 702:	98 87       	std	Y+8, r25	; 0x08
+ 704:	8f 83       	std	Y+7, r24	; 0x07
+  EN_LED_systemStates_t ledRet = LED_NOK;
+ 706:	81 e0       	ldi	r24, 0x01	; 1
+ 708:	8a 83       	std	Y+2, r24	; 0x02
+  EN_GPIO_systemState_t gpioRet = GPIO_NOK;
+ 70a:	81 e0       	ldi	r24, 0x01	; 1
+ 70c:	89 83       	std	Y+1, r24	; 0x01
+  if (PTR_NULL != ST_ptrLedInstance) {
+ 70e:	8f 81       	ldd	r24, Y+7	; 0x07
+ 710:	98 85       	ldd	r25, Y+8	; 0x08
+ 712:	00 97       	sbiw	r24, 0x00	; 0
+ 714:	e1 f0       	breq	.+56     	; 0x74e <LED_turnOn+0x60>
+
+    ST_GPIO_cfg_t copyOfLedInstance = {
+        .logicOnPin = (EN_GPIO_pinLogic_t)ST_ptrLedInstance->ledDefaultState,
+        .pinDirection = GPIO_OUTPUT,
+        .pinNumber = ST_ptrLedInstance->ledPinNumber,
+        .portName = ST_ptrLedInstance->ledPortName};
+ 716:	ef 81       	ldd	r30, Y+7	; 0x07
+ 718:	f8 85       	ldd	r31, Y+8	; 0x08
+ 71a:	81 81       	ldd	r24, Z+1	; 0x01
+ 71c:	ef 81       	ldd	r30, Y+7	; 0x07
+ 71e:	f8 85       	ldd	r31, Y+8	; 0x08
+ 720:	92 81       	ldd	r25, Z+2	; 0x02
+ 722:	ef 81       	ldd	r30, Y+7	; 0x07
+ 724:	f8 85       	ldd	r31, Y+8	; 0x08
+ 726:	20 81       	ld	r18, Z
+ 728:	8b 83       	std	Y+3, r24	; 0x03
+ 72a:	9c 83       	std	Y+4, r25	; 0x04
+ 72c:	81 e0       	ldi	r24, 0x01	; 1
+ 72e:	8d 83       	std	Y+5, r24	; 0x05
+ 730:	2e 83       	std	Y+6, r18	; 0x06
+    gpioRet = GPIO_writePinLogic(&copyOfLedInstance, GPIO_HIGH);
+ 732:	ce 01       	movw	r24, r28
+ 734:	03 96       	adiw	r24, 0x03	; 3
+ 736:	61 e0       	ldi	r22, 0x01	; 1
+ 738:	0e 94 f3 00 	call	0x1e6	; 0x1e6 <GPIO_writePinLogic>
+ 73c:	89 83       	std	Y+1, r24	; 0x01
+    if (GPIO_OK == gpioRet) {
+ 73e:	89 81       	ldd	r24, Y+1	; 0x01
+ 740:	88 23       	and	r24, r24
+ 742:	11 f4       	brne	.+4      	; 0x748 <LED_turnOn+0x5a>
+      ledRet = LED_OK;
+ 744:	1a 82       	std	Y+2, r1	; 0x02
+ 746:	05 c0       	rjmp	.+10     	; 0x752 <LED_turnOn+0x64>
+    } else {
+      ledRet = LED_NOK;
+ 748:	81 e0       	ldi	r24, 0x01	; 1
+ 74a:	8a 83       	std	Y+2, r24	; 0x02
+ 74c:	02 c0       	rjmp	.+4      	; 0x752 <LED_turnOn+0x64>
+    }
+  } else {
+    ledRet = LED_PTR_NULL;
+ 74e:	82 e0       	ldi	r24, 0x02	; 2
+ 750:	8a 83       	std	Y+2, r24	; 0x02
+  }
+  return ledRet;
+ 752:	8a 81       	ldd	r24, Y+2	; 0x02
+}
+ 754:	28 96       	adiw	r28, 0x08	; 8
+ 756:	0f b6       	in	r0, 0x3f	; 63
+ 758:	f8 94       	cli
+ 75a:	de bf       	out	0x3e, r29	; 62
+ 75c:	0f be       	out	0x3f, r0	; 63
+ 75e:	cd bf       	out	0x3d, r28	; 61
+ 760:	cf 91       	pop	r28
+ 762:	df 91       	pop	r29
+ 764:	08 95       	ret
+
+00000766 <LED_turnOff>:
+EN_LED_systemStates_t LED_turnOff(ST_LED_cfg_t const *ST_ptrLedInstance) {
+ 766:	df 93       	push	r29
+ 768:	cf 93       	push	r28
+ 76a:	cd b7       	in	r28, 0x3d	; 61
+ 76c:	de b7       	in	r29, 0x3e	; 62
+ 76e:	28 97       	sbiw	r28, 0x08	; 8
+ 770:	0f b6       	in	r0, 0x3f	; 63
+ 772:	f8 94       	cli
+ 774:	de bf       	out	0x3e, r29	; 62
+ 776:	0f be       	out	0x3f, r0	; 63
+ 778:	cd bf       	out	0x3d, r28	; 61
+ 77a:	98 87       	std	Y+8, r25	; 0x08
+ 77c:	8f 83       	std	Y+7, r24	; 0x07
+  EN_LED_systemStates_t ledRet = LED_NOK;
+ 77e:	81 e0       	ldi	r24, 0x01	; 1
+ 780:	8a 83       	std	Y+2, r24	; 0x02
+  EN_GPIO_systemState_t gpioRet = GPIO_NOK;
+ 782:	81 e0       	ldi	r24, 0x01	; 1
+ 784:	89 83       	std	Y+1, r24	; 0x01
+  if (PTR_NULL != ST_ptrLedInstance) {
+ 786:	8f 81       	ldd	r24, Y+7	; 0x07
+ 788:	98 85       	ldd	r25, Y+8	; 0x08
+ 78a:	00 97       	sbiw	r24, 0x00	; 0
+ 78c:	e1 f0       	breq	.+56     	; 0x7c6 <LED_turnOff+0x60>
+
+    ST_GPIO_cfg_t copyOfLedInstance = {
+        .logicOnPin = (EN_GPIO_pinLogic_t)ST_ptrLedInstance->ledDefaultState,
+        .pinDirection = GPIO_OUTPUT,
+        .pinNumber = ST_ptrLedInstance->ledPinNumber,
+        .portName = ST_ptrLedInstance->ledPortName};
+ 78e:	ef 81       	ldd	r30, Y+7	; 0x07
+ 790:	f8 85       	ldd	r31, Y+8	; 0x08
+ 792:	81 81       	ldd	r24, Z+1	; 0x01
+ 794:	ef 81       	ldd	r30, Y+7	; 0x07
+ 796:	f8 85       	ldd	r31, Y+8	; 0x08
+ 798:	92 81       	ldd	r25, Z+2	; 0x02
+ 79a:	ef 81       	ldd	r30, Y+7	; 0x07
+ 79c:	f8 85       	ldd	r31, Y+8	; 0x08
+ 79e:	20 81       	ld	r18, Z
+ 7a0:	8b 83       	std	Y+3, r24	; 0x03
+ 7a2:	9c 83       	std	Y+4, r25	; 0x04
+ 7a4:	81 e0       	ldi	r24, 0x01	; 1
+ 7a6:	8d 83       	std	Y+5, r24	; 0x05
+ 7a8:	2e 83       	std	Y+6, r18	; 0x06
+    gpioRet = GPIO_writePinLogic(&copyOfLedInstance, GPIO_LOW);
+ 7aa:	ce 01       	movw	r24, r28
+ 7ac:	03 96       	adiw	r24, 0x03	; 3
+ 7ae:	60 e0       	ldi	r22, 0x00	; 0
+ 7b0:	0e 94 f3 00 	call	0x1e6	; 0x1e6 <GPIO_writePinLogic>
+ 7b4:	89 83       	std	Y+1, r24	; 0x01
+    if (GPIO_OK == gpioRet) {
+ 7b6:	89 81       	ldd	r24, Y+1	; 0x01
+ 7b8:	88 23       	and	r24, r24
+ 7ba:	11 f4       	brne	.+4      	; 0x7c0 <LED_turnOff+0x5a>
+      ledRet = LED_OK;
+ 7bc:	1a 82       	std	Y+2, r1	; 0x02
+ 7be:	05 c0       	rjmp	.+10     	; 0x7ca <LED_turnOff+0x64>
+    } else {
+      ledRet = LED_NOK;
+ 7c0:	81 e0       	ldi	r24, 0x01	; 1
+ 7c2:	8a 83       	std	Y+2, r24	; 0x02
+ 7c4:	02 c0       	rjmp	.+4      	; 0x7ca <LED_turnOff+0x64>
+    }
+  } else {
+    ledRet = LED_PTR_NULL;
+ 7c6:	82 e0       	ldi	r24, 0x02	; 2
+ 7c8:	8a 83       	std	Y+2, r24	; 0x02
+  }
+  return ledRet;
+ 7ca:	8a 81       	ldd	r24, Y+2	; 0x02
+}
+ 7cc:	28 96       	adiw	r28, 0x08	; 8
+ 7ce:	0f b6       	in	r0, 0x3f	; 63
+ 7d0:	f8 94       	cli
+ 7d2:	de bf       	out	0x3e, r29	; 62
+ 7d4:	0f be       	out	0x3f, r0	; 63
+ 7d6:	cd bf       	out	0x3d, r28	; 61
+ 7d8:	cf 91       	pop	r28
+ 7da:	df 91       	pop	r29
+ 7dc:	08 95       	ret
+
+000007de <LED_toggle>:
+EN_LED_systemStates_t LED_toggle(ST_LED_cfg_t const *ST_ptrLedInstance) {
+ 7de:	df 93       	push	r29
+ 7e0:	cf 93       	push	r28
+ 7e2:	cd b7       	in	r28, 0x3d	; 61
+ 7e4:	de b7       	in	r29, 0x3e	; 62
+ 7e6:	28 97       	sbiw	r28, 0x08	; 8
+ 7e8:	0f b6       	in	r0, 0x3f	; 63
+ 7ea:	f8 94       	cli
+ 7ec:	de bf       	out	0x3e, r29	; 62
+ 7ee:	0f be       	out	0x3f, r0	; 63
+ 7f0:	cd bf       	out	0x3d, r28	; 61
+ 7f2:	98 87       	std	Y+8, r25	; 0x08
+ 7f4:	8f 83       	std	Y+7, r24	; 0x07
+  EN_LED_systemStates_t ledRet = LED_NOK;
+ 7f6:	81 e0       	ldi	r24, 0x01	; 1
+ 7f8:	8a 83       	std	Y+2, r24	; 0x02
+  EN_GPIO_systemState_t gpioRet = GPIO_NOK;
+ 7fa:	81 e0       	ldi	r24, 0x01	; 1
+ 7fc:	89 83       	std	Y+1, r24	; 0x01
+  if (PTR_NULL != ST_ptrLedInstance) {
+ 7fe:	8f 81       	ldd	r24, Y+7	; 0x07
+ 800:	98 85       	ldd	r25, Y+8	; 0x08
+ 802:	00 97       	sbiw	r24, 0x00	; 0
+ 804:	d9 f0       	breq	.+54     	; 0x83c <LED_toggle+0x5e>
+
+    ST_GPIO_cfg_t copyOfLedInstance = {
+        .logicOnPin = (EN_GPIO_pinLogic_t)ST_ptrLedInstance->ledDefaultState,
+        .pinDirection = GPIO_OUTPUT,
+        .pinNumber = ST_ptrLedInstance->ledPinNumber,
+        .portName = ST_ptrLedInstance->ledPortName};
+ 806:	ef 81       	ldd	r30, Y+7	; 0x07
+ 808:	f8 85       	ldd	r31, Y+8	; 0x08
+ 80a:	81 81       	ldd	r24, Z+1	; 0x01
+ 80c:	ef 81       	ldd	r30, Y+7	; 0x07
+ 80e:	f8 85       	ldd	r31, Y+8	; 0x08
+ 810:	92 81       	ldd	r25, Z+2	; 0x02
+ 812:	ef 81       	ldd	r30, Y+7	; 0x07
+ 814:	f8 85       	ldd	r31, Y+8	; 0x08
+ 816:	20 81       	ld	r18, Z
+ 818:	8b 83       	std	Y+3, r24	; 0x03
+ 81a:	9c 83       	std	Y+4, r25	; 0x04
+ 81c:	81 e0       	ldi	r24, 0x01	; 1
+ 81e:	8d 83       	std	Y+5, r24	; 0x05
+ 820:	2e 83       	std	Y+6, r18	; 0x06
+    gpioRet = GPIO_togglePinLogic(&copyOfLedInstance);
+ 822:	ce 01       	movw	r24, r28
+ 824:	03 96       	adiw	r24, 0x03	; 3
+ 826:	0e 94 b6 01 	call	0x36c	; 0x36c <GPIO_togglePinLogic>
+ 82a:	89 83       	std	Y+1, r24	; 0x01
+    if (GPIO_OK == gpioRet) {
+ 82c:	89 81       	ldd	r24, Y+1	; 0x01
+ 82e:	88 23       	and	r24, r24
+ 830:	11 f4       	brne	.+4      	; 0x836 <LED_toggle+0x58>
+      ledRet = LED_OK;
+ 832:	1a 82       	std	Y+2, r1	; 0x02
+ 834:	05 c0       	rjmp	.+10     	; 0x840 <LED_toggle+0x62>
+    } else {
+      ledRet = LED_NOK;
+ 836:	81 e0       	ldi	r24, 0x01	; 1
+ 838:	8a 83       	std	Y+2, r24	; 0x02
+ 83a:	02 c0       	rjmp	.+4      	; 0x840 <LED_toggle+0x62>
+    }
+  } else {
+    ledRet = LED_PTR_NULL;
+ 83c:	82 e0       	ldi	r24, 0x02	; 2
+ 83e:	8a 83       	std	Y+2, r24	; 0x02
+  }
+  return ledRet;
+ 840:	8a 81       	ldd	r24, Y+2	; 0x02
+ 842:	28 96       	adiw	r28, 0x08	; 8
+ 844:	0f b6       	in	r0, 0x3f	; 63
+ 846:	f8 94       	cli
+ 848:	de bf       	out	0x3e, r29	; 62
+ 84a:	0f be       	out	0x3f, r0	; 63
+ 84c:	cd bf       	out	0x3d, r28	; 61
+ 84e:	cf 91       	pop	r28
+ 850:	df 91       	pop	r29
+ 852:	08 95       	ret
+
+00000854 <EDIP_init>:
+// GitHub        : https://github.com/sherifkhadr
+/*************************************************************************/
+
+#include "dip_interface.h"
+
+EN_EDIP_systemState_t EDIP_init(ST_EDIP_cfg_t const *ST_ptrEdipCfgInstance) {
+ 854:	df 93       	push	r29
+ 856:	cf 93       	push	r28
+ 858:	cd b7       	in	r28, 0x3d	; 61
+ 85a:	de b7       	in	r29, 0x3e	; 62
+ 85c:	28 97       	sbiw	r28, 0x08	; 8
+ 85e:	0f b6       	in	r0, 0x3f	; 63
+ 860:	f8 94       	cli
+ 862:	de bf       	out	0x3e, r29	; 62
+ 864:	0f be       	out	0x3f, r0	; 63
+ 866:	cd bf       	out	0x3d, r28	; 61
+ 868:	98 87       	std	Y+8, r25	; 0x08
+ 86a:	8f 83       	std	Y+7, r24	; 0x07
+  EN_EDIP_systemState_t dipRet = EDIP_NOK;
+ 86c:	81 e0       	ldi	r24, 0x01	; 1
+ 86e:	8a 83       	std	Y+2, r24	; 0x02
+  EN_GPIO_systemState_t gpioRet = GPIO_NOK;
+ 870:	81 e0       	ldi	r24, 0x01	; 1
+ 872:	89 83       	std	Y+1, r24	; 0x01
+
+  if (PTR_NULL != ST_ptrEdipCfgInstance) {
+ 874:	8f 81       	ldd	r24, Y+7	; 0x07
+ 876:	98 85       	ldd	r25, Y+8	; 0x08
+ 878:	00 97       	sbiw	r24, 0x00	; 0
+ 87a:	c1 f0       	breq	.+48     	; 0x8ac <__stack+0x4d>
+    ST_GPIO_cfg_t dipPinCfg = {.pinDirection = GPIO_INPUT,
+                               .pinNumber = ST_ptrEdipCfgInstance->dipPin,
+                               .portName = ST_ptrEdipCfgInstance->dipPort,
+                               .logicOnPin = GPIO_HIGH};
+ 87c:	ef 81       	ldd	r30, Y+7	; 0x07
+ 87e:	f8 85       	ldd	r31, Y+8	; 0x08
+ 880:	91 81       	ldd	r25, Z+1	; 0x01
+ 882:	ef 81       	ldd	r30, Y+7	; 0x07
+ 884:	f8 85       	ldd	r31, Y+8	; 0x08
+ 886:	80 81       	ld	r24, Z
+ 888:	9b 83       	std	Y+3, r25	; 0x03
+ 88a:	8c 83       	std	Y+4, r24	; 0x04
+ 88c:	1d 82       	std	Y+5, r1	; 0x05
+ 88e:	81 e0       	ldi	r24, 0x01	; 1
+ 890:	8e 83       	std	Y+6, r24	; 0x06
+
+    gpioRet = GPIO_initPin(&dipPinCfg);
+ 892:	ce 01       	movw	r24, r28
+ 894:	03 96       	adiw	r24, 0x03	; 3
+ 896:	0e 94 41 00 	call	0x82	; 0x82 <GPIO_initPin>
+ 89a:	89 83       	std	Y+1, r24	; 0x01
+
+    if (gpioRet == GPIO_OK) {
+ 89c:	89 81       	ldd	r24, Y+1	; 0x01
+ 89e:	88 23       	and	r24, r24
+ 8a0:	11 f4       	brne	.+4      	; 0x8a6 <__stack+0x47>
+      dipRet = EDIP_OK;
+ 8a2:	1a 82       	std	Y+2, r1	; 0x02
+ 8a4:	05 c0       	rjmp	.+10     	; 0x8b0 <__stack+0x51>
+    } else {
+      dipRet = EDIP_NOK;
+ 8a6:	81 e0       	ldi	r24, 0x01	; 1
+ 8a8:	8a 83       	std	Y+2, r24	; 0x02
+ 8aa:	02 c0       	rjmp	.+4      	; 0x8b0 <__stack+0x51>
+    }
+  } else {
+    dipRet = EDIP_PTR_NULL;
+ 8ac:	82 e0       	ldi	r24, 0x02	; 2
+ 8ae:	8a 83       	std	Y+2, r24	; 0x02
+  }
+  return dipRet;
+ 8b0:	8a 81       	ldd	r24, Y+2	; 0x02
+}
+ 8b2:	28 96       	adiw	r28, 0x08	; 8
+ 8b4:	0f b6       	in	r0, 0x3f	; 63
+ 8b6:	f8 94       	cli
+ 8b8:	de bf       	out	0x3e, r29	; 62
+ 8ba:	0f be       	out	0x3f, r0	; 63
+ 8bc:	cd bf       	out	0x3d, r28	; 61
+ 8be:	cf 91       	pop	r28
+ 8c0:	df 91       	pop	r29
+ 8c2:	08 95       	ret
+
+000008c4 <EDIP_readStates>:
+
+EN_EDIP_systemState_t
+EDIP_readStates(ST_EDIP_cfg_t const *ST_ptrEdipCfgInstance,
+                EN_EDIP_logicStatus_t *retOfEdipStatus) {
+ 8c4:	df 93       	push	r29
+ 8c6:	cf 93       	push	r28
+ 8c8:	cd b7       	in	r28, 0x3d	; 61
+ 8ca:	de b7       	in	r29, 0x3e	; 62
+ 8cc:	2b 97       	sbiw	r28, 0x0b	; 11
+ 8ce:	0f b6       	in	r0, 0x3f	; 63
+ 8d0:	f8 94       	cli
+ 8d2:	de bf       	out	0x3e, r29	; 62
+ 8d4:	0f be       	out	0x3f, r0	; 63
+ 8d6:	cd bf       	out	0x3d, r28	; 61
+ 8d8:	99 87       	std	Y+9, r25	; 0x09
+ 8da:	88 87       	std	Y+8, r24	; 0x08
+ 8dc:	7b 87       	std	Y+11, r23	; 0x0b
+ 8de:	6a 87       	std	Y+10, r22	; 0x0a
+
+  EN_EDIP_systemState_t dipRet = EDIP_NOK;
+ 8e0:	81 e0       	ldi	r24, 0x01	; 1
+ 8e2:	8a 83       	std	Y+2, r24	; 0x02
+  EN_GPIO_systemState_t gpioRet = GPIO_NOK;
+ 8e4:	81 e0       	ldi	r24, 0x01	; 1
+ 8e6:	89 83       	std	Y+1, r24	; 0x01
+
+  if (PTR_NULL != ST_ptrEdipCfgInstance) {
+ 8e8:	88 85       	ldd	r24, Y+8	; 0x08
+ 8ea:	99 85       	ldd	r25, Y+9	; 0x09
+ 8ec:	00 97       	sbiw	r24, 0x00	; 0
+ 8ee:	79 f1       	breq	.+94     	; 0x94e <EDIP_readStates+0x8a>
+    ST_GPIO_cfg_t dipPinCfg = {.pinDirection = GPIO_INPUT,
+                               .pinNumber = ST_ptrEdipCfgInstance->dipPin,
+                               .portName = ST_ptrEdipCfgInstance->dipPort};
+ 8f0:	e8 85       	ldd	r30, Y+8	; 0x08
+ 8f2:	f9 85       	ldd	r31, Y+9	; 0x09
+ 8f4:	91 81       	ldd	r25, Z+1	; 0x01
+ 8f6:	e8 85       	ldd	r30, Y+8	; 0x08
+ 8f8:	f9 85       	ldd	r31, Y+9	; 0x09
+ 8fa:	80 81       	ld	r24, Z
+ 8fc:	1b 82       	std	Y+3, r1	; 0x03
+ 8fe:	1c 82       	std	Y+4, r1	; 0x04
+ 900:	1d 82       	std	Y+5, r1	; 0x05
+ 902:	1e 82       	std	Y+6, r1	; 0x06
+ 904:	9b 83       	std	Y+3, r25	; 0x03
+ 906:	8c 83       	std	Y+4, r24	; 0x04
+
+    EN_GPIO_pinLogic_t currentSwitchStatus;
+    gpioRet = GPIO_readPinLogic(&dipPinCfg, &currentSwitchStatus);
+ 908:	ce 01       	movw	r24, r28
+ 90a:	03 96       	adiw	r24, 0x03	; 3
+ 90c:	9e 01       	movw	r18, r28
+ 90e:	29 5f       	subi	r18, 0xF9	; 249
+ 910:	3f 4f       	sbci	r19, 0xFF	; 255
+ 912:	b9 01       	movw	r22, r18
+ 914:	0e 94 78 01 	call	0x2f0	; 0x2f0 <GPIO_readPinLogic>
+ 918:	89 83       	std	Y+1, r24	; 0x01
+    if (gpioRet == GPIO_OK) {
+ 91a:	89 81       	ldd	r24, Y+1	; 0x01
+ 91c:	88 23       	and	r24, r24
+ 91e:	a1 f4       	brne	.+40     	; 0x948 <EDIP_readStates+0x84>
+      if (currentSwitchStatus == GPIO_LOW) {
+ 920:	8f 81       	ldd	r24, Y+7	; 0x07
+ 922:	88 23       	and	r24, r24
+ 924:	31 f4       	brne	.+12     	; 0x932 <EDIP_readStates+0x6e>
+        *retOfEdipStatus = EDIP_IS_ON;
+ 926:	ea 85       	ldd	r30, Y+10	; 0x0a
+ 928:	fb 85       	ldd	r31, Y+11	; 0x0b
+ 92a:	81 e0       	ldi	r24, 0x01	; 1
+ 92c:	80 83       	st	Z, r24
+        dipRet = EDIP_OK;
+ 92e:	1a 82       	std	Y+2, r1	; 0x02
+ 930:	10 c0       	rjmp	.+32     	; 0x952 <EDIP_readStates+0x8e>
+      } else if (currentSwitchStatus == GPIO_HIGH) {
+ 932:	8f 81       	ldd	r24, Y+7	; 0x07
+ 934:	81 30       	cpi	r24, 0x01	; 1
+ 936:	29 f4       	brne	.+10     	; 0x942 <EDIP_readStates+0x7e>
+        *retOfEdipStatus = EDIP_IS_OFF;
+ 938:	ea 85       	ldd	r30, Y+10	; 0x0a
+ 93a:	fb 85       	ldd	r31, Y+11	; 0x0b
+ 93c:	10 82       	st	Z, r1
+        dipRet = EDIP_OK;
+ 93e:	1a 82       	std	Y+2, r1	; 0x02
+ 940:	08 c0       	rjmp	.+16     	; 0x952 <EDIP_readStates+0x8e>
+      } else {
+        dipRet = EDIP_NOK;
+ 942:	81 e0       	ldi	r24, 0x01	; 1
+ 944:	8a 83       	std	Y+2, r24	; 0x02
+ 946:	05 c0       	rjmp	.+10     	; 0x952 <EDIP_readStates+0x8e>
+      }
+    } else {
+      dipRet = EDIP_NOK;
+ 948:	81 e0       	ldi	r24, 0x01	; 1
+ 94a:	8a 83       	std	Y+2, r24	; 0x02
+ 94c:	02 c0       	rjmp	.+4      	; 0x952 <EDIP_readStates+0x8e>
+    }
+  } else {
+    dipRet = EDIP_PTR_NULL;
+ 94e:	82 e0       	ldi	r24, 0x02	; 2
+ 950:	8a 83       	std	Y+2, r24	; 0x02
+  }
+  return dipRet;
+ 952:	8a 81       	ldd	r24, Y+2	; 0x02
+ 954:	2b 96       	adiw	r28, 0x0b	; 11
+ 956:	0f b6       	in	r0, 0x3f	; 63
+ 958:	f8 94       	cli
+ 95a:	de bf       	out	0x3e, r29	; 62
+ 95c:	0f be       	out	0x3f, r0	; 63
+ 95e:	cd bf       	out	0x3d, r28	; 61
+ 960:	cf 91       	pop	r28
+ 962:	df 91       	pop	r29
+ 964:	08 95       	ret
+
+00000966 <appInit>:
+                    .ledPinNumber = GPIO_PIN0,
+                    .ledPortName = GPIO_PORTD};
+
+ST_EDIP_cfg_t dip = {.dipPin = GPIO_PIN1, .dipPort = GPIO_PORTD};
+
+void appInit(void) {
+ 966:	df 93       	push	r29
+ 968:	cf 93       	push	r28
+ 96a:	cd b7       	in	r28, 0x3d	; 61
+ 96c:	de b7       	in	r29, 0x3e	; 62
+  LED_init(&led);
+ 96e:	88 e7       	ldi	r24, 0x78	; 120
+ 970:	90 e0       	ldi	r25, 0x00	; 0
+ 972:	0e 94 3c 03 	call	0x678	; 0x678 <LED_init>
+  EDIP_init(&dip);
+ 976:	8b e7       	ldi	r24, 0x7B	; 123
+ 978:	90 e0       	ldi	r25, 0x00	; 0
+ 97a:	0e 94 2a 04 	call	0x854	; 0x854 <EDIP_init>
+}
+ 97e:	cf 91       	pop	r28
+ 980:	df 91       	pop	r29
+ 982:	08 95       	ret
+
+00000984 <appMain>:
+
+void appMain(void) {
+ 984:	df 93       	push	r29
+ 986:	cf 93       	push	r28
+ 988:	0f 92       	push	r0
+ 98a:	cd b7       	in	r28, 0x3d	; 61
+ 98c:	de b7       	in	r29, 0x3e	; 62
+  EN_EDIP_logicStatus_t dipstate = EDIP_IS_OFF;
+ 98e:	19 82       	std	Y+1, r1	; 0x01
+  EDIP_readStates(&dip, &dipstate);
+ 990:	8b e7       	ldi	r24, 0x7B	; 123
+ 992:	90 e0       	ldi	r25, 0x00	; 0
+ 994:	9e 01       	movw	r18, r28
+ 996:	2f 5f       	subi	r18, 0xFF	; 255
+ 998:	3f 4f       	sbci	r19, 0xFF	; 255
+ 99a:	b9 01       	movw	r22, r18
+ 99c:	0e 94 62 04 	call	0x8c4	; 0x8c4 <EDIP_readStates>
+
+  if (dipstate == EDIP_IS_ON) {
+ 9a0:	89 81       	ldd	r24, Y+1	; 0x01
+ 9a2:	81 30       	cpi	r24, 0x01	; 1
+ 9a4:	29 f4       	brne	.+10     	; 0x9b0 <appMain+0x2c>
+    LED_turnOn(&led);
+ 9a6:	88 e7       	ldi	r24, 0x78	; 120
+ 9a8:	90 e0       	ldi	r25, 0x00	; 0
+ 9aa:	0e 94 77 03 	call	0x6ee	; 0x6ee <LED_turnOn>
+ 9ae:	07 c0       	rjmp	.+14     	; 0x9be <appMain+0x3a>
+  } else if (dipstate == EDIP_IS_OFF) {
+ 9b0:	89 81       	ldd	r24, Y+1	; 0x01
+ 9b2:	88 23       	and	r24, r24
+ 9b4:	21 f4       	brne	.+8      	; 0x9be <appMain+0x3a>
+    LED_turnOff(&led);
+ 9b6:	88 e7       	ldi	r24, 0x78	; 120
+ 9b8:	90 e0       	ldi	r25, 0x00	; 0
+ 9ba:	0e 94 b3 03 	call	0x766	; 0x766 <LED_turnOff>
+  } else {
+    /*do nothing*/
+  }
+}
+ 9be:	0f 90       	pop	r0
+ 9c0:	cf 91       	pop	r28
+ 9c2:	df 91       	pop	r29
+ 9c4:	08 95       	ret
+
+000009c6 <main>:
+// GitHub        : https://github.com/sherifkhadr
+/*************************************************************************/
+
+#include "APPLICATION/app.h"
+
+void main(void) {
+ 9c6:	df 93       	push	r29
+ 9c8:	cf 93       	push	r28
+ 9ca:	cd b7       	in	r28, 0x3d	; 61
+ 9cc:	de b7       	in	r29, 0x3e	; 62
+
+  appInit();
+ 9ce:	0e 94 b3 04 	call	0x966	; 0x966 <appInit>
+  while (1) {
+    appMain();
+ 9d2:	0e 94 c2 04 	call	0x984	; 0x984 <appMain>
+ 9d6:	fd cf       	rjmp	.-6      	; 0x9d2 <main+0xc>
+
+000009d8 <_exit>:
+ 9d8:	f8 94       	cli
+
+000009da <__stop_program>:
+ 9da:	ff cf       	rjmp	.-2      	; 0x9da <__stop_program>

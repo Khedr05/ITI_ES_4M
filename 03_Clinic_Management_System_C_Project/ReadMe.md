@@ -2,6 +2,14 @@
 
 This is a repository for the Clinic Management System project developed as part of the ITI_ES_4M course.
 
+## Table of Contents
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [Contact](#contact)
+
 ## Project Overview
 
 The Clinic Management System is a C-based project designed to facilitate the management of a clinic's operations. It offers functionalities for managing patient records, scheduling appointments, managing available slots, and more.
@@ -16,10 +24,22 @@ The Clinic Management System is a C-based project designed to facilitate the man
 
 ## Installation
 
-1. Clone the repository: git clone https://github.com/sherifkhadr/ITI_ES_4M.git
-3. Navigate to the project directory: cd ITI_ES_4M/03_Clinic_Management_System_C_Project
-4. Compile the source code: gcc main.c -o clinic_management_system
-5. Run the application: ./clinic_management_system
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/sherifkhadr/ITI_ES_4M.git
+   ```
+2. Navigate to the project directory: 
+   ```bash 
+   cd ITI_ES_4M/03_Clinic_Management_System_C_Project
+   ```
+3. Compile the source code:
+   ```bash
+   gcc main.c -o clinic_management_system
+   ``` 
+4. Run the application:
+   ```bash
+   ./clinic_management_system
+   ```
 
 ## Usage
 
@@ -32,4 +52,4 @@ Contributions to the Clinic Management System project are welcome. If you encoun
 
 ## Contact
 
-For any inquiries or further information, please contact [Sherif Khadr](mailto:sherifkhadr@example.com).
+For any inquiries or further information, please contact [Sherif Khadr](https://www.linkedin.com/in/sherifkhadr/).

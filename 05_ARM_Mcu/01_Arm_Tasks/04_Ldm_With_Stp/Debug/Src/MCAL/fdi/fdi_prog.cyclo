@@ -1,0 +1,3 @@
+../Src/MCAL/fdi/fdi_prog.c:12:24:MFDI_uddtEraseSector	6
+../Src/MCAL/fdi/fdi_prog.c:56:24:MFDI_uddtFlashWrite	6
+../Src/MCAL/fdi/fdi_prog.c:101:24:MFDI_uddtEraseAppArea	3

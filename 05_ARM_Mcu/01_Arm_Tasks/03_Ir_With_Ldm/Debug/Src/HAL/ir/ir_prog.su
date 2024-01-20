@@ -1,0 +1,4 @@
+../Src/HAL/ir/ir_prog.c:11:22:HIR_uddtIrReceiveInit	16	static
+../Src/HAL/ir/ir_prog.c:33:13:HIR_uddtIrReceive	16	static
+../Src/HAL/ir/ir_prog.c:57:13:HIR_uddtIrGetDataLogic	16	static
+../Src/HAL/ir/ir_prog.c:74:22:HIR_uddtIrGetDataVal	16	static

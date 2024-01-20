@@ -1,0 +1,35 @@
+import tkinter as tk
+
+# Create the main window
+root = tk.Tk()
+root.title("Car Digital Dashboard")
+
+# Create a canvas to display the dashboard
+canvas = tk.Canvas(root, width=400, height=200)
+canvas.pack()
+
+# Display the speed
+speed_label = tk.Label(canvas, text="Speed: 0 km/h")
+speed_label.pack()
+
+# Display the fuel level
+fuel_label = tk.Label(canvas, text="Fuel: 100%")
+fuel_label.pack()
+
+# Create a function to update the dashboard
+def update_dashboard():
+    # Simulate changing values (you can replace these with real data)
+    speed = 60  # km/h
+    fuel = 75   # percentage
+
+    # Update the labels
+    speed_label.config(text=f"Speed: {speed} km/h")
+    fuel_label.config(text=f"Fuel: {fuel}%")
+
+    # Call this function periodically to update the dashboard
+    root.after(1000, update_dashboard)
+
+# Call the update_dashboard function to start updating the dashboard
+update_dashboard()
+
+root.mainloop()

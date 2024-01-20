@@ -1,0 +1,7 @@
+../Src/MCAL/nvic/nvic_prog.c:13:24:MNVIC_enableInterrupt	2
+../Src/MCAL/nvic/nvic_prog.c:29:24:MNVIC_disableInterrupt	2
+../Src/MCAL/nvic/nvic_prog.c:45:24:MNVIC_enableInterruptPending	2
+../Src/MCAL/nvic/nvic_prog.c:61:24:MNVIC_disableInterruptPending	2
+../Src/MCAL/nvic/nvic_prog.c:77:24:MNVIC_IsInterruptActive	2
+../Src/MCAL/nvic/nvic_prog.c:93:24:MNVIC_SetInterruptPriority	3
+../Src/MCAL/nvic/nvic_prog.c:111:24:MNVIC_SetInterruptGroup	2

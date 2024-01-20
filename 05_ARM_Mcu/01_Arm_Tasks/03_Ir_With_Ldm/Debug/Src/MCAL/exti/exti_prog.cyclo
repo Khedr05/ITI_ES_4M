@@ -1,0 +1,7 @@
+../Src/MCAL/exti/exti_prog.c:15:24:MEXTI_enableEXTI	2
+../Src/MCAL/exti/exti_prog.c:32:24:MEXTI_disableEXTI	2
+../Src/MCAL/exti/exti_prog.c:49:24:MEXTI_softwareInterrupt	2
+../Src/MCAL/exti/exti_prog.c:66:24:MEXTI_setTriggerSource	7
+../Src/MCAL/exti/exti_prog.c:109:24:MEXTI_setExtiConfig	7
+../Src/MCAL/exti/exti_prog.c:142:24:MEXTI_setCallBack	3
+../Src/MCAL/exti/exti_prog.c:160:6:EXTI0_IRQHandler	2

@@ -1,0 +1,7 @@
+../Src/MCAL/usart/usart_prog.c:12:26:MUSART_uddtInit	5
+../Src/MCAL/usart/usart_prog.c:67:26:MUSART_uddtEnable	2
+../Src/MCAL/usart/usart_prog.c:82:26:MUSART_uddtDisable	2
+../Src/MCAL/usart/usart_prog.c:95:26:MUSART_uddtSend	1
+../Src/MCAL/usart/usart_prog.c:100:26:MUSART_uddtReceive	1
+../Src/MCAL/usart/usart_prog.c:105:26:MUSART_uddtSendBlocking	3
+../Src/MCAL/usart/usart_prog.c:115:26:MUSART_uddtReceiveBlocking	2

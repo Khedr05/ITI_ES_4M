@@ -1,0 +1,13 @@
+../Src/HAL/tft/tft_prog.c:12:24:HTFT_uddtInit	32	static
+../Src/HAL/tft/tft_prog.c:57:24:HTFT_uddtWriteCommand	24	static
+../Src/HAL/tft/tft_prog.c:74:24:HTFT_uddtWriteData	24	static
+../Src/HAL/tft/tft_prog.c:91:24:HTFT_uddtReset	24	static
+../Src/HAL/tft/tft_prog.c:118:24:HTFT_uddtDisplayImage	24	static
+../Src/HAL/tft/tft_prog.c:140:24:HTFT_uddtFillBackgroundColor	24	static
+../Src/HAL/tft/tft_prog.c:163:24:HTFT_uddtSetXYAxis	24	static
+../Src/HAL/tft/tft_prog.c:191:24:HTFT_uddtFillRetangle	32	static
+../Src/HAL/tft/tft_prog.c:216:24:HTFT_uddtDrawHorizontalLine	32	static
+../Src/HAL/tft/tft_prog.c:241:24:HTFT_uddtDrawVerticalLine	32	static
+../Src/HAL/tft/tft_prog.c:267:24:HTFT_uddtDrawTriangle	32	static
+../Src/HAL/tft/tft_prog.c:293:24:HTFT_uddtClrDisplay	32	static
+../Src/HAL/tft/tft_prog.c:318:24:HTFT_uddtDrawChar	56	static

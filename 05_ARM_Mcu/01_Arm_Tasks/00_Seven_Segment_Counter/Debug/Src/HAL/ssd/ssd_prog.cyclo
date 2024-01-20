@@ -1,0 +1,4 @@
+../Src/HAL/ssd/ssd_prog.c:14:23:HSSD_init	3
+../Src/HAL/ssd/ssd_prog.c:37:23:HSSD_displayNumber	7
+../Src/HAL/ssd/ssd_prog.c:82:23:HSSD_enableDot	4
+../Src/HAL/ssd/ssd_prog.c:114:23:HSSD_disableDot	4

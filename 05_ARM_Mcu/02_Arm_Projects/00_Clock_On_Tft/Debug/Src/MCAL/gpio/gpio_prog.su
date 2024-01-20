@@ -1,0 +1,9 @@
+../Src/MCAL/gpio/gpio_prog.c:12:24:MGPIO_setPinMode	24	static
+../Src/MCAL/gpio/gpio_prog.c:75:24:MGPIO_setOutputMode	24	static
+../Src/MCAL/gpio/gpio_prog.c:136:24:MGPIO_setOutputSpeed	24	static
+../Src/MCAL/gpio/gpio_prog.c:197:24:MGPIO_setPullState	24	static
+../Src/MCAL/gpio/gpio_prog.c:257:24:MGPIO_getPinVal	24	static
+../Src/MCAL/gpio/gpio_prog.c:317:24:MGPIO_setPinVal	24	static
+../Src/MCAL/gpio/gpio_prog.c:431:24:MGPIO_directSetReset	24	static
+../Src/MCAL/gpio/gpio_prog.c:547:24:MGPIO_setPortVal	24	static
+../Src/MCAL/gpio/gpio_prog.c:606:24:MGPIO_SetAltFun	16	static

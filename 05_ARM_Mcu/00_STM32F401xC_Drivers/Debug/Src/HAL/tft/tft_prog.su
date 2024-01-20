@@ -1,0 +1,5 @@
+../Src/HAL/tft/tft_prog.c:12:24:HTFT_uddtInit	32	static
+../Src/HAL/tft/tft_prog.c:57:24:HTFT_uddtWriteCommand	24	static
+../Src/HAL/tft/tft_prog.c:74:24:HTFT_uddtWriteData	24	static
+../Src/HAL/tft/tft_prog.c:91:24:HTFT_uddtReset	24	static
+../Src/HAL/tft/tft_prog.c:118:24:HTFT_uddtDisplayImage	24	static

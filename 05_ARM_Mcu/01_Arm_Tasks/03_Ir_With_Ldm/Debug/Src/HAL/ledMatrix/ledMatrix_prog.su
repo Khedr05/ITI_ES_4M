@@ -1,0 +1,2 @@
+../Src/HAL/ledMatrix/ledMatrix_prog.c:12:23:HLDM_init	24	static
+../Src/HAL/ledMatrix/ledMatrix_prog.c:26:23:HLDM_enable	24	static

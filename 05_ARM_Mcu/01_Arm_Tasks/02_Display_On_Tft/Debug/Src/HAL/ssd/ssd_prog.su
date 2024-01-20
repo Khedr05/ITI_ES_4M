@@ -1,0 +1,4 @@
+../Src/HAL/ssd/ssd_prog.c:14:23:HSSD_init	24	static
+../Src/HAL/ssd/ssd_prog.c:36:23:HSSD_displayNumber	24	static
+../Src/HAL/ssd/ssd_prog.c:81:23:HSSD_enableDot	24	static
+../Src/HAL/ssd/ssd_prog.c:113:23:HSSD_disableDot	24	static

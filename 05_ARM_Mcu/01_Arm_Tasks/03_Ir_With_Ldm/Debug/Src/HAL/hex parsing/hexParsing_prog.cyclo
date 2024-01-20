@@ -1,0 +1,3 @@
+../Src/HAL/hex parsing/hexParsing_prog.c:14:9:HEX_parsAsciiToHex	5
+../Src/HAL/hex parsing/hexParsing_prog.c:30:6:HEX_parsData	2
+../Src/HAL/hex parsing/hexParsing_prog.c:64:6:APARSER_voidParseRecord	4

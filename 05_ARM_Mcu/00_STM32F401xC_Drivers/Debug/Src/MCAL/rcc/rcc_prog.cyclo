@@ -1,0 +1,3 @@
+../Src/MCAL/rcc/rcc_prog.c:12:23:MRCC_Init	1
+../Src/MCAL/rcc/rcc_prog.c:69:23:MRCC_enablePeripheral	7
+../Src/MCAL/rcc/rcc_prog.c:112:23:MRCC_disablePeripheral	7

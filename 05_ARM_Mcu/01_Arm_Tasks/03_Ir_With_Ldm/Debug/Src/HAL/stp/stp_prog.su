@@ -1,0 +1,3 @@
+../Src/HAL/stp/stp_prog.c:11:24:HSTP_uddtInit	24	static
+../Src/HAL/stp/stp_prog.c:39:24:HSTP_uddtByteOutput	24	static
+../Src/HAL/stp/stp_prog.c:69:24:HSTP_uddtHalfWordOutput	24	static

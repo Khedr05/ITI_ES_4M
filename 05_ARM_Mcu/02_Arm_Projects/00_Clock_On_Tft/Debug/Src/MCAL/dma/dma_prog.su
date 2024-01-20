@@ -1,0 +1,7 @@
+../Src/MCAL/dma/dma_prog.c:13:23:MDMA_uddtInit	16	static
+../Src/MCAL/dma/dma_prog.c:62:23:MDMA_uddtSetAddress	24	static
+../Src/MCAL/dma/dma_prog.c:73:23:MDMA_uddtStreamEnable	24	static
+../Src/MCAL/dma/dma_prog.c:91:23:MDMA_uddtStreamDisable	24	static
+../Src/MCAL/dma/dma_prog.c:108:23:MDMA_uddtSetCallBack	24	static
+../Src/MCAL/dma/dma_prog.c:123:23:MDMA_uddtClearFlag	16	static
+../Src/MCAL/dma/dma_prog.c:129:6:DMA2_Stream0_IRQHandler	8	static

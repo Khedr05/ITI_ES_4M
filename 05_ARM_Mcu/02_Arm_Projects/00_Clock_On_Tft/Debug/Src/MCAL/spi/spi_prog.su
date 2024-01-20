@@ -1,0 +1,3 @@
+../Src/MCAL/spi/spi_prog.c:12:24:MSPI_uddtInit	24	static
+../Src/MCAL/spi/spi_prog.c:36:24:MSPI_uddtSendBlocking	24	static
+../Src/MCAL/spi/spi_prog.c:49:24:MSPI_uddtReceiveBlocking	24	static

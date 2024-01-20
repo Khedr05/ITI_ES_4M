@@ -1,0 +1,5 @@
+../Src/HAL/tft/tft_prog.c:12:24:HTFT_uddtInit	2
+../Src/HAL/tft/tft_prog.c:57:24:HTFT_uddtWriteCommand	2
+../Src/HAL/tft/tft_prog.c:74:24:HTFT_uddtWriteData	2
+../Src/HAL/tft/tft_prog.c:91:24:HTFT_uddtReset	2
+../Src/HAL/tft/tft_prog.c:118:24:HTFT_uddtDisplayImage	2

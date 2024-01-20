@@ -1,0 +1,8 @@
+../Src/MCAL/systick/systick_prog.c:14:23:MSTK_init	8
+../Src/MCAL/systick/systick_prog.c:65:23:MSTK_setBusyWait	2
+../Src/MCAL/systick/systick_prog.c:88:23:MSTK_SetIntervalSingle	2
+../Src/MCAL/systick/systick_prog.c:111:23:MSTK_SetIntervalPeriodic	2
+../Src/MCAL/systick/systick_prog.c:132:23:MSTK_StopInterval	1
+../Src/MCAL/systick/systick_prog.c:144:23:MSTK_getElapsedTime	2
+../Src/MCAL/systick/systick_prog.c:160:23:MSTK_getRemainingTime	2
+../Src/MCAL/systick/systick_prog.c:177:6:SysTick_Handler	4
